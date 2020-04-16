@@ -1,9 +1,8 @@
 version: 1
 patchUpdated:
   generators:
-    - command: kustomize build . > output.yaml
+    - command: kustomize build .
 
   # Fluxd will create or update the file when needed, and commit any changes it makes to git.
   # => Image name
-  patchFile: 
-    - flux-patch.yaml
+  patchFile: flux-patch.yaml
