@@ -8,7 +8,6 @@ metadata:
     fluxcd.io/tag.java-demo-database: semver:~8.0
 
 spec:
-  replicas: 2
   template:
     spec:
       $setElementOrder/containers:
