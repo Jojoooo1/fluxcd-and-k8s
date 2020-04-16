@@ -4,27 +4,27 @@ kind: Deployment
 
 metadata:
   name: java-demo-database-deployment
-  # namespace: java-demo
-  annotations:
-    flux.weave.works/automated: "true"
   labels:
-    app: java-demo-database
+    app: java-demo
     role: database
-    stage: local
 
 spec:
   selector:
     matchLabels:
-      app: java-demo-database
+      app: java-demo
+      role: database
+      
   template:
     metadata:
       labels:
-        app: java-demo-database
+        app: java-demo
+        role: database
+
     spec:
       serviceAccountName: default # d. if you wanna set specific RBAC to the pod
       containers:
         - name: java-demo-database
-          image: mysql:latest
+          image: mysql:8
           imagePullPolicy: IfNotPresent # d. Always
           env:
             - name: MYSQL_ROOT_PASSWORD

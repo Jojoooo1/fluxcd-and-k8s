@@ -3,35 +3,32 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: java-demo-backend-deployment
-  # namespace: java-demo
-  annotations:
-    flux.weave.works/automated: "true"
+  name: java-demo-backend-deployment 
   labels:
-    app: java-demo-backend
+    app: java-demo
     role: backend
 
 spec:
   selector:
     matchLabels:
-      app: java-demo-backend
+      app: java-demo
       role: backend
 
-  strategy:
-    type: RollingUpdate # d.
+  # strategy:
+  #   type: RollingUpdate # d.
   template:
     metadata:
       labels:
-        app: java-demo-backend
+        app: java-demo
         role: backend
 
     spec:
       serviceAccountName: default # d. if you wanna set specific RBAC to the pod
-      restartPolicy: Always # d.
+      # restartPolicy: Always # d.
       containers:
         - name: java-demo-backend
-          image: jojoooo1/carros
-          imagePullPolicy: Always # d.
+          image: jojoooo1/carros:1.1.0.RC-0fbab77da628b0b3839017076b0b107ba14e772e
+          # imagePullPolicy: Always # d.
           # env:
           #   - name: JAVA_TOOL_OPTIONS # used by distroless image
           #     value:
