@@ -1,10 +1,9 @@
 version: 1
 patchUpdated:
   generators:
-    - command: kustomize build .
+    - command: kustomize build . > output.yaml
 
   # Fluxd will create or update the file when needed, and commit any changes it makes to git.
   # => Image name
   patchFile: 
-    - services/java-demo/backend/deployment-patch.yaml
-    - services/java-demo/database/deployment-patch.yaml
+    - output.yaml
