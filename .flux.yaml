@@ -5,4 +5,4 @@ patchUpdated:
 
   # Fluxd will create or update the file when needed, and commit any changes it makes to git.
   # => Image name
-  patchFile: flux-sync.yaml
+  patchFile: flux-auto-sync.yaml
