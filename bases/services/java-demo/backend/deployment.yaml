@@ -27,7 +27,7 @@ spec:
       # restartPolicy: Always # d.
       containers:
         - name: java-demo-backend
-          image: jojoooo1/carros:1.1.0.RC-0fbab77da628b0b3839017076b0b107ba14e772e
+          image: docker.io/jojoooo1/carros:1.1.0.RC-0fbab77da628b0b3839017076b0b107ba14e772e
           # imagePullPolicy: Always # d.
           # env:
           #   - name: JAVA_TOOL_OPTIONS # used by distroless image

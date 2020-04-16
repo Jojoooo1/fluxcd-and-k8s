@@ -14,4 +14,4 @@ spec:
         - name: java-demo-backend
       containers:
         - name: java-demo-backend
-          image: jojoooo1/carros:1.1.0.RC-6dd3e69727479aee57e2961784b37086937bb697
+          image: docker.io/jojoooo1/carros:1.1.0.RC-6dd3e69727479aee57e2961784b37086937bb697
