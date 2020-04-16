@@ -7,3 +7,7 @@ bases:
 resources:
   - common/namespace.yaml
   - common/rbac.yaml
+
+patchesStrategicMerge:
+  - backend/patch-deployment.yaml
+  - database/patch-deployment.yaml

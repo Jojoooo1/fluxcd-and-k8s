@@ -8,14 +8,14 @@ metadata:
   labels:
     app: java-demo-backend
     role: backend
-    stage: local
+    stage: staging
 
 spec:
   selector:
     matchLabels:
       app: java-demo-backend
       role: backend
-      stage: local
+      stage: staging
 
   strategy:
     type: Recreate # d. RollingUpdate
@@ -24,7 +24,7 @@ spec:
       labels:
         app: java-demo-backend
         role: backend
-        stage: local
+        stage: staging
 
     spec:
       serviceAccountName: default # d. if you wanna set specific RBAC to the pod

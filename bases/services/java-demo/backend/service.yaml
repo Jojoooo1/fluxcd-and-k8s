@@ -9,13 +9,13 @@ metadata:
   labels:
     app: java-demo-backend
     role: backend
-    stage: local
+    stage: staging
 
 spec:
   selector:
     app: java-demo-backend
     role: backend
-    stage: local
+    stage: staging
   # Open port of the VM so traffic can go in from the outside
   type: ClusterIP # d.
   ports:
