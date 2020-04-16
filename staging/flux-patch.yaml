@@ -12,3 +12,17 @@ spec:
       containers:
       - image: docker.io/jojoooo1/carros:rc-1.1.0-4cb8cf3f5a81370d005d6a0412303f6e2e203749
         name: java-demo-backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-demo-database-deployment
+  namespace: staging
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: java-demo-database
+      containers:
+      - image: mysql:8.0.19
+        name: java-demo-database
