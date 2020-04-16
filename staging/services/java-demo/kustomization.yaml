@@ -9,5 +9,5 @@ resources:
   - common/rbac.yaml
 
 patchesStrategicMerge:
-  - backend/patch-deployment.yaml
-  - database/patch-deployment.yaml
+  - backend/deployment-patch.yaml
+  - database/deployment-patch.yaml
