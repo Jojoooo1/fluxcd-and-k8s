@@ -3,10 +3,8 @@ kind: Kustomization
 
 namespace: staging
 # nameSuffix: -staging
-
 commonLabels:
     env: staging
-
 
 resources:
   - common/namespace.yaml
