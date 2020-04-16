@@ -1,18 +1,18 @@
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: java-demo-backend-deployment
-  namespace: staging
-  annotations:
-    flux.weave.works/automated: "true"
-    flux.weave.works/tag.java-demo-backend: glob:rc-*
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: java-demo-backend-deployment
+#   namespace: staging
+#   annotations:
+#     flux.weave.works/automated: "true"
+#     flux.weave.works/tag.java-demo-backend: glob:rc-*
 
-spec:
-  template:
-    spec:
-      $setElementOrder/containers:
-      - name: java-demo-backend
-      containers:
-        - name: java-demo-backend
-          image: jojoooo1/carros:1.1.0.RC-6dd3e69727479aee57e2961784b37086937bb697
+# spec:
+#   template:
+#     spec:
+#       $setElementOrder/containers:
+#       - name: java-demo-backend
+#       containers:
+#         - name: java-demo-backend
+#           image: jojoooo1/carros:1.1.0.RC-6dd3e69727479aee57e2961784b37086937bb697

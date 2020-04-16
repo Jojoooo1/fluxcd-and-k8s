@@ -5,7 +5,8 @@ kind: Deployment
 metadata:
   name: java-demo-database-deployment
   # namespace: java-demo
-
+  annotations:
+    flux.weave.works/automated: "true"
   labels:
     app: java-demo-database
     role: database
