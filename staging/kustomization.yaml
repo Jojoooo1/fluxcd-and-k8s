@@ -1,27 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: staging
-nameSuffix: -staging
-
-commonLabels:
-    env: staging
-
 bases:
-  - ../bases/services/java-demo
-
-resources:
-  - services/common/namespace.yaml
-  - services/common/rbac.yaml
-
-patchesStrategicMerge:
-  - services/java-demo/backend/deployment-patch.yaml
-  - services/java-demo/database/deployment-patch.yaml
-
-# Workaround the fact that namePrefix / nameSuffix also adds a prefix to the base namespace. Issue: https://github.com/kubernetes-sigs/kustomize/issues/235#issuecomment-522887625. Workaround: https://github.com/kubernetes-sigs/kustomize/issues/235#issuecomment-430197657
-patchesJson6902:
-  - target:
-      version: v1
-      kind: Namespace
-      name: staging
-    path: common/namespace.yaml
+  - flux
+  - services
