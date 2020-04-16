@@ -16,7 +16,7 @@ spec:
       role: backend
 
   strategy:
-    type: Recreate # d. RollingUpdate
+    type: RollingUpdate # d.
   template:
     metadata:
       labels:
@@ -29,7 +29,7 @@ spec:
       containers:
         - name: java-demo-backend
           image: jojoooo1/carros
-          imagePullPolicy: Never # d. Always
+          imagePullPolicy: Always # d.
           # env:
           #   - name: JAVA_TOOL_OPTIONS # used by distroless image
           #     value:
