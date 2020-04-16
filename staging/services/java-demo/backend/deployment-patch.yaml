@@ -4,7 +4,7 @@ metadata:
   name: java-demo-backend-deployment
   annotations:
     flux.weave.works/automated: "true"
-    # flux.weave.works/tag.podinfod: semver:~1.7
+    flux.weave.works/tag.java-demo-backend: glob:rc-*
 
 spec:
   template:
