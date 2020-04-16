@@ -22,3 +22,6 @@ spec:
 
             - --git-url=git@github.com:jojoooo1/java-demo-flux
             - --git-email=chevalier.jonathan@live.fr
+            
+            # Garbage collection enable
+            - -sync-garbage-collection
