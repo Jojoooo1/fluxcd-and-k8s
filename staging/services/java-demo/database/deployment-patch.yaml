@@ -10,4 +10,4 @@ spec:
     spec:
       containers:
         - name: java-demo-database
-          image: mysql:8.0.19
+          image: mysql:8.0.18
