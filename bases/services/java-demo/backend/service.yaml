@@ -6,14 +6,13 @@ metadata:
   # dns
   name: java-demo-backend-service
   # namespace: java-demo
-
   labels:
-    app: java-demo-backend
+    app: java-demo
     role: backend
 
 spec:
   selector:
-    app: java-demo-backend
+    app: java-demo
     role: backend
   # Open port of the VM so traffic can go in from the outside
   type: ClusterIP # d.

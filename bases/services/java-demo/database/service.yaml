@@ -6,13 +6,14 @@ metadata:
   # namespace: java-demo
 
   labels:
-    app: java-demo-database
+    app: java-demo
     role: database
-    stage: local
 
 spec:
   selector:
-    app: java-demo-database
+    app: java-demo
+    role: database
+
   ports:
     - protocol: TCP # d.
       # Port exposed by the service
