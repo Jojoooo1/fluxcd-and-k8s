@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  # dns
+  name: java-demo-backend-service
+  # namespace: java-demo
+
+  labels:
+    app: java-demo-backend
+    role: backend
+    stage: local
+
+spec:
+  selector:
+    app: java-demo-backend
+    role: backend
+    stage: local
+  # Open port of the VM so traffic can go in from the outside
+  type: ClusterIP # d.
+  ports:
+    - protocol: TCP
+      # Port exposed by the service
+      port: 8080
+      # Port of the pod accessed
+      targetPort: 8080
+      # If you wanna open a VM port (type: NodePort)
+      # nodePort: 30007

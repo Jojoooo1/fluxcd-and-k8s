@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: java-demo-backend-deployment
+  # namespace: java-demo
+
+  labels:
+    app: java-demo-backend
+    role: backend
+    stage: local
+
+spec:
+  selector:
+    matchLabels:
+      app: java-demo-backend
+      role: backend
+      stage: local
+
+  strategy:
+    type: Recreate # d. RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: java-demo-backend
+        role: backend
+        stage: local
+
+    spec:
+      serviceAccountName: default # d. if you wanna set specific RBAC to the pod
+      restartPolicy: Always # d.
+      containers:
+        - name: java-demo-backend
+          image: jojoooo1/carros
+          imagePullPolicy: Never # d. Always
+          # env:
+          #   - name: JAVA_TOOL_OPTIONS # used by distroless image
+          #     value:
+          ports:
+            - name: container-port
+              containerPort: 8080
+          #
+          # Liveness and Readiness
+          # To use when restarting the app will recover it (heap, stack problems etc.)
+          # livenessProbe:
+          #   failureThreshold: 2 # d. 1
+          #   periodSeconds: 15 # d. 10
+          #   httpGet:
+          #     port: 8080
+          #     path: /actuator/health
+          #
+          # Indicates that the Pod has successfully initialized. 
+          # No other probes are executed until this completes successfully.
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: container-port
+            failureThreshold: 3
+            periodSeconds: 25
+
+          readinessProbe:
+            periodSeconds: 10 # d.
+            failureThreshold: 3 # d.
+            httpGet:
+              port: container-port
+              path: /actuator/health
+          # 
+          # RESOURCES (Sets in jib: -Xms512m, -Xmx1024m (becarefull with the compatibility))
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "1"
+            limits:
+              memory: "1024Mi"
+              cpu: "1"
