@@ -10,8 +10,10 @@ resources:
 
 # Gets flux operator default value
 bases:
-  - ../../base/flux-operator/
-# Update/Merge env specific params
+  - ../../bases/flux-operator/flux
+  - ../../bases/flux-operator/memcached
+
+# Update/Merge flux specific configuration for staging
 patchesStrategicMerge:
   - flux-patch.yaml
 

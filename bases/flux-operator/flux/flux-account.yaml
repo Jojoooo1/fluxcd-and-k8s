@@ -4,4 +4,4 @@ metadata:
   labels:
     name: flux
   name: flux
-  namespace: flux
+  # namespace: flux

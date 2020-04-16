@@ -3,7 +3,6 @@
 # only needed for Kubernetes with role-based access control (RBAC).
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
-
 metadata:
   labels:
     name: flux
@@ -20,7 +19,6 @@ rules:
 
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
-
 metadata:
   labels:
     name: flux
@@ -30,8 +28,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: flux
-
 subjects:
   - kind: ServiceAccount
     name: flux
-    namespace: flux
+    namespace: flux-system
