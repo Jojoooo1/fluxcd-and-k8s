@@ -1,0 +1,20 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Validate kustomization
+        uses: stefanprodan/kube-tools@v1
+        with:
+          kubectl: 1.18.0
+          kustomize: 3.4.0
+          helm: 2.16.5
+          helmv3: 3.1.2
+          command: |
+            echo "Validating install"
+            kustomize build staging | kubeval --strict --ignore-missing-schemas
