@@ -9,19 +9,19 @@ metadata:
     role: backend
 
 spec:
+  replicas: 1
+
   selector:
     matchLabels:
       app: java-demo
       role: backend
 
-  # strategy:
-  #   type: RollingUpdate # d.
   template:
     metadata:
       labels:
         app: java-demo
         role: backend
-
+        
     spec:
       serviceAccountName: default # d. if you wanna set specific RBAC to the pod
       # restartPolicy: Always # d.

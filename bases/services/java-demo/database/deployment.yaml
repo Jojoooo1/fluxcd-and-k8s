@@ -9,11 +9,13 @@ metadata:
     role: database
 
 spec:
+  replicas: 1
+  
   selector:
     matchLabels:
       app: java-demo
       role: database
-      
+
   template:
     metadata:
       labels:
