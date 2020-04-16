@@ -22,6 +22,6 @@ spec:
 
             - --git-url=git@github.com:jojoooo1/java-demo-flux
             - --git-email=chevalier.jonathan@live.fr
-            
-            # Garbage collection enable
-            - -sync-garbage-collection
+
+            # Delete resources that were created by fluxd, but are no longer in the git repo
+            - --sync-garbage-collection
