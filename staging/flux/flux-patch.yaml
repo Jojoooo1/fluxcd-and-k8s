@@ -21,6 +21,7 @@ spec:
             - --git-path=staging
 
             - --git-url=git@github.com:jojoooo1/java-demo-flux
+            - --git-user=Flux automation
             - --git-email=chevalier.jonathan@live.fr
 
             # Delete resources that were created by fluxd, but are no longer in the git repo
