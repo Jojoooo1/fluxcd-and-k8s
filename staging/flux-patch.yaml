@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: java-demo-backend-deployment
+  namespace: staging
 spec:
   template:
     spec:
@@ -15,6 +16,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: java-demo-database-deployment
+  namespace: staging
 spec:
   template:
     spec:
