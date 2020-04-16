@@ -11,8 +11,8 @@ bases:
   - ../bases/services/java-demo
 
 resources:
-  - services/java-demo/common/namespace.yaml
-  - services/java-demo/common/rbac.yaml
+  - services/common/namespace.yaml
+  - services/common/rbac.yaml
 
 patchesStrategicMerge:
   - services/java-demo/backend/deployment-patch.yaml

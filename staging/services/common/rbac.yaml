@@ -24,7 +24,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: default # default service created at pod level
-    # namespace: java-demo
+    namespace: staging
 
 # The Role
 roleRef:

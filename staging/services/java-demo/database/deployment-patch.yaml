@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: java-demo-database-deployment
   annotations:
     flux.weave.works/automated: "true"
     # flux.weave.works/tag.podinfod: semver:~1.7
