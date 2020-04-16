@@ -1,4 +1,8 @@
 #!/bin/bash
+set -e
+
+DIR=$PWD
+cd ..
 # Starts flux operator
 kubectl apply -k ./staging/flux/ && kubectl -n flux-system rollout status deployment/flux
 
