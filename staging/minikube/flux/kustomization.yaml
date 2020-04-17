@@ -5,8 +5,8 @@ kind: Kustomization
 namespace: flux-system
 # Gets flux operator default value
 bases:
-  - ../../bases/flux-operator/flux
-  - ../../bases/flux-operator/memcached
+  - ../../../bases/flux-operator/flux
+  - ../../../bases/flux-operator/memcached
 
 # Creates namespace where flux-operator will live
 resources:

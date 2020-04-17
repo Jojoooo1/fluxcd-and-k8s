@@ -15,7 +15,7 @@ spec:
             - --memcached-service=
             - --ssh-keygen-dir=/var/fluxd/keygen
 
-            - --git-path=staging
+            - --git-path=staging/minikube
             - --git-branch=master
             - --git-url=git@github.com:jojoooo1/java-demo-flux
 

@@ -12,7 +12,7 @@ resources:
   - common/rbac.yaml
 
 bases:
-  - ../../bases/services/java-demo
+  - ../../../bases/services/java-demo
   
 patchesStrategicMerge:
   - java-demo/backend/deployment-annotations.yaml
