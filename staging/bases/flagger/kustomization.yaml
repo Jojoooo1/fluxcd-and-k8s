@@ -1,4 +1,4 @@
-namespace: istio-system
+namespace: flagger-system
 
 resources:
   - namespace.yaml
