@@ -3,6 +3,18 @@ kind: Kustomization
 
 namespace: staging
 
+# commonAnnotations => Set annotations on all Resources and Selectors.
+# metadata:
+#   annotations:
+#     annotation_1: VALUE
+
+# BE BECAREFULL => From apps/v1 on, a Deployment’s label selector is immutable after it gets created. (can fucked up your deployment)
+# commonLabels => Set labels on all Resources and Selectors.
+# selector:
+#     matchLabels:
+#       app: foo # Selector was changed
+#       environment: test # Selector was added
+
 bases:
   - ../../../bases/services/java-demo
 patchesStrategicMerge:
