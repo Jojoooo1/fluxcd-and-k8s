@@ -52,7 +52,7 @@ spec:
             httpGet:
               port: container-port
               path: /actuator/health
-            periodSeconds: 30 # d.
+            periodSeconds: 20 # d.
             failureThreshold: 3 # d.
 
           livenessProbe:
@@ -60,12 +60,14 @@ spec:
             httpGet:
               port: container-port
               path: /actuator/info
+            periodSeconds: 20 # d.
+            failureThreshold: 3 # d.
           # 
           # RESOURCES becarefull with container compatibility
           resources:
             requests:
-              memory: "512Mi" # jib: -Xms256m
+              memory: "256Mi" # jib: -Xms256m
               cpu: "0.5"
             limits:
-              memory: "1024Mi" # jib: -Xmx512m
+              memory: "512Mi" # jib: -Xmx512m
               cpu: "0.5"
