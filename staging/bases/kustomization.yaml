@@ -2,12 +2,38 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 bases:
-  - ../../../bases/services/java-demo
+  - ../../bases/services/java-demo
+patchesStrategicMerge:
+  - services/java-demo/backend/deployment-annotations.yaml
+  - services/java-demo/database/deployment-annotations.yaml
 
 resources:
   - services/common/namespace.yaml
   - services/common/rbac.yaml
 
-patchesStrategicMerge:
-  - services/java-demo/backend/deployment-annotations.yaml
-  - services/java-demo/database/deployment-annotations.yaml
+# patchesJSON6902:
+# - target:
+#     group: apps
+#     version: v1
+#     kind: Deployment
+#     name: deploy
+#   patch: |-
+#     - op: replace
+#       path: /spec/template/spec/containers/0/image
+#       value: nginx:latest
+
+
+# var: can be referenced in YAML as $(MY_VAR_NAME)
+# vars:
+#   - name: SOME_SECRET_NAME
+#     objref:
+#       kind: Secret
+#       name: my-secret
+#       apiVersion: v1
+#   - name: MY_SERVICE_NAME
+#     objref:
+#       kind: Service
+#       name: my-service
+#       apiVersion: v1
+#     fieldref:
+#       fieldpath: metadata.name
