@@ -17,4 +17,4 @@ jobs:
           helmv3: 3.1.2
           command: |
             echo "Validating install"
-            kustomize build staging | kubeval --strict --ignore-missing-schemas
+            kustomize build staging/minikube | kubeval --strict --ignore-missing-schemas
