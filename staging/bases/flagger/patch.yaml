@@ -11,7 +11,7 @@ spec:
         - name: flagger
           args:
             - -log-level=info
-            - -mesh-provider=istio
+            - -mesh-provider=kubernetes
             - -metrics-server=http://flagger-prometheus:9090
             - -slack-user=flagger
             - -slack-channel=
