@@ -8,7 +8,8 @@ namespace: staging
 #   annotations:
 #     annotation_1: VALUE
 
-# BE BECAREFULL => From apps/v1 on, a Deployment’s label selector is immutable after it gets created. (can fucked up your deployment)
+# BE BECAREFULL IF CREATED CAN NOT CHANGE IT
+# => From apps/v1 on, a Deployment’s label selector is immutable after it gets created. (can fucked up your deployment)
 # commonLabels => Set labels on all Resources and Selectors.
 # selector:
 #     matchLabels:

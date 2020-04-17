@@ -47,19 +47,20 @@ spec:
           #
           # Indicates that the Pod has successfully initialized. 
           # No other probes are executed until this completes successfully.
-          startupProbe:
-            httpGet:
-              path: /actuator/health
-              port: container-port
-            failureThreshold: 3
-            periodSeconds: 25
-
           readinessProbe:
+            initialDelaySeconds: 30
+            httpGet:
+              port: container-port
+              path: /actuator/health
             periodSeconds: 10 # d.
             failureThreshold: 3 # d.
+
+          livenessProbe:
+            initialDelaySeconds: 30
             httpGet:
               port: container-port
-              path: /actuator/health
+              path: /actuator/info
+            timeoutSeconds: 10
           # 
           # RESOURCES becarefull with container compatibility
           resources:
