@@ -12,5 +12,6 @@ bases:
 resources:
   - namespace.yaml
 
-
+patchesStrategicMerge:
+  - flux-patch.yaml
   

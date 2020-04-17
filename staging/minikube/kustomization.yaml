@@ -5,8 +5,5 @@ commonLabels:
     cluster: minikube
 
 bases:
-  - ../bases/flux
+  - flux
   - ../bases/services
-
-patchesStrategicMerge:
-  - flux/flux-patch.yaml
