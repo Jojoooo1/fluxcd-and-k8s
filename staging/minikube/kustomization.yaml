@@ -8,5 +8,5 @@ commonLabels:
     env: staging
 
 bases:
-  - ../bases
   - flux
+  - ../bases
