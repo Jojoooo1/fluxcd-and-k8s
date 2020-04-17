@@ -64,8 +64,8 @@ spec:
           # RESOURCES becarefull with container compatibility
           resources:
             requests:
-              memory: "512Mi" # jib: -Xms512m
-              cpu: "1"
+              memory: "256Mi" # jib: -Xms256m
+              cpu: "0.5"
             limits:
-              memory: "1024Mi" # jib: -Xmx1024m
-              cpu: "1"
+              memory: "512Mi" # jib: -Xmx512m
+              cpu: "0.5"
