@@ -26,7 +26,7 @@ spec:
       serviceAccountName: default # d. if you wanna set specific RBAC to the pod
       containers:
         - name: java-demo-database
-          image: mysql:8
+          image: mysql
           imagePullPolicy: IfNotPresent # d. Always
           env:
             - name: MYSQL_ROOT_PASSWORD
