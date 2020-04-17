@@ -4,8 +4,8 @@ resources:
   - namespace.yaml
 
 bases:
-  - ../../base/flagger/flagger
-  - ../../base/flagger/prometheus
+  - ../../../bases/flagger/flagger
+  - ../../../bases/flagger/prometheus
 
 patchesStrategicMerge:
   - patch.yaml
