@@ -48,7 +48,7 @@ spec:
           # Indicates that the Pod has successfully initialized. 
           # No other probes are executed until this completes successfully.
           startupProbe:
-            initialDelaySeconds: 40 # Becarefull with ressources, will have a direct effect on startup time
+            initialDelaySeconds: 60 # Becarefull with ressources, will have a direct effect on startup time
             httpGet:
               path: /actuator/health
               port: container-port
@@ -72,7 +72,7 @@ spec:
           # RESOURCES becarefull with container compatibility
           resources:
             requests:
-              memory: "512Mi" # jib: -Xms256m
+              memory: "512Mi" # jib: -Xms256m # 94, 76.412 seconds 
               cpu: "0.5"
             limits:
               memory: "1024Mi" # jib: -Xmx512m
