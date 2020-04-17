@@ -52,7 +52,7 @@ spec:
             httpGet:
               port: container-port
               path: /actuator/health
-            periodSeconds: 10 # d.
+            periodSeconds: 30 # d.
             failureThreshold: 3 # d.
 
           livenessProbe:
@@ -60,7 +60,6 @@ spec:
             httpGet:
               port: container-port
               path: /actuator/info
-            timeoutSeconds: 10
           # 
           # RESOURCES becarefull with container compatibility
           resources:
