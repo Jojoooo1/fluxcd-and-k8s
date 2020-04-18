@@ -1,9 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# Sets namespace to flux-system i.e. flux operator will be installed in namespace "flux-system"
-namespace: flux-system
-
 # Gets flux operator default value
 bases:
   - ../../../bases/flux/flux
@@ -13,4 +10,3 @@ bases:
 # Modify namespace where flux will live
 resources:
   - namespace.yaml
-  
