@@ -27,3 +27,4 @@ spec:
       containers:
       - image: mysql:8.0.19
         name: java-demo-database
+
