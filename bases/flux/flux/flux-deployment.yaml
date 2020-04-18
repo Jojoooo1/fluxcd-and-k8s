@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flux
-  # namespace: flux
+  namespace: flux
 spec:
   replicas: 1
   selector:

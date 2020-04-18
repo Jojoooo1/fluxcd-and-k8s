@@ -3,12 +3,14 @@ kind: Kustomization
 
 # Sets namespace to flux-system i.e. flux operator will be installed in namespace "flux-system"
 namespace: flux-system
+
 # Gets flux operator default value
 bases:
-  - ../../../bases/flux-operator/flux
-  - ../../../bases/flux-operator/memcached
+  - ../../../bases/flux/flux
+  - ../../../bases/flux/memcached
+  - ../../../bases/flux/helm-operator
 
-# Creates namespace where flux-operator will live
+# Modify namespace where flux will live
 resources:
   - namespace.yaml
   

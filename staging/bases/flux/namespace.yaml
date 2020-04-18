@@ -5,8 +5,8 @@ kind: Namespace
 metadata:
   name: flux-system
   
-  annotations:
-    linkerd.io/inject: disabled
-  labels:
-    istio-injection: disabled
-    appmesh.k8s.aws/sidecarInjectorWebhook: disabled
+  # annotations:
+  #   linkerd.io/inject: disabled
+  # labels:
+  #   istio-injection: disabled
+  #   appmesh.k8s.aws/sidecarInjectorWebhook: disabled
