@@ -1,4 +1,3 @@
-# YOU SHOULD BE DELETING RESSOURCES HERE THAT HAS CHANGED NAMESPACE OR MODIFYING
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -27,4 +26,14 @@ spec:
       containers:
       - image: mysql:8.0.19
         name: java-demo-database
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: mongodb
+  namespace: staging
+spec:
+  values:
+    image:
+      tag: 4.0.14
 

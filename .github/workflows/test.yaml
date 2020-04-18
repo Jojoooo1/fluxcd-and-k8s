@@ -18,3 +18,11 @@ jobs:
           command: |
             echo "Validating install"
             kustomize build staging/minikube | kubeval --strict --ignore-missing-schemas
+      # TODO:
+      # - name: Validate Helm Release
+      #   uses: stefanprodan/hrval-action@v3.1.0
+      #   with:
+      #     helmRelease: test/podinfo.yaml
+      #     helmVersion: v3
+      #     kubernetesVersion: master
+      #     ignoreValues: true
