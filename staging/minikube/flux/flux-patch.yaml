@@ -3,7 +3,8 @@ kind: Deployment
 
 metadata:
   name: flux
-
+  namespace: flux
+  
 spec:
   template:
     spec:
