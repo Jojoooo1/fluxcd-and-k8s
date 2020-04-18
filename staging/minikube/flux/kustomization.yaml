@@ -3,11 +3,7 @@ kind: Kustomization
 
 namespace: flux-system
 
-# Gets flux operator default value
 bases:
   - ../../bases/flux
 
-patchesStrategicMerge:
-  - flux-patch.yaml
-  - helm-operator-patch.yaml
   
