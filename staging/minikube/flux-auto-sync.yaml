@@ -32,7 +32,7 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: mongodb
-  namespace: staging
+  namespace: dev
 spec:
   values:
     image:
