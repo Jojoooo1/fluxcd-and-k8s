@@ -28,11 +28,7 @@ spec:
     - java-demo-backend-service.staging.svc.cluster.local
 
   http:
-  - match:
-      - uri:
-          prefix: "/api/v1/"
-
-    route:
+  - route:
       - destination:
           host: java-demo-backend-service.staging.svc.cluster.local
           port:
