@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: flux-system
+
+bases:
+  - ../../bases/flux
+
+patchesJson6902:
+  # Replace flux operator arguments
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: flux
+      namespace: flux
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/args
+        value:
+          - --manifest-generation=true
+          - --memcached-hostname=memcached.flux-system
+          - --memcached-service=
+          - --ssh-keygen-dir=/var/fluxd/keygen
+
+          - --git-path=environments/minikube
+          - --git-branch=master
+          - --git-url=git@github.com:jojoooo1/java-demo-flux
+
+          - --git-label=flux-sync
+          - --git-user=Flux
+          - --git-email=chevalier.jonathan@live.fr
+
+          - --git-poll-interval=5m # d.
+
+          # Delete resources that were created by fluxd, but are no longer in the git repo
+          - --sync-garbage-collection=true
+          - --sync-interval=5m # d.
