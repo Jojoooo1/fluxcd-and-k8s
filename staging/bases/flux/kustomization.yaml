@@ -11,6 +11,7 @@ bases:
   - ../../../bases/flux/flux
   - ../../../bases/flux/memcached
   - ../../../bases/flux/helm-operator
+  - ../../../bases/flux/sealed-secret
 
 # Delete default flux ns using $patch command
 patchesStrategicMerge:

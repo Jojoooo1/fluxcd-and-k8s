@@ -18,3 +18,12 @@ spec:
     image:
       repository: bitnami/mongodb
       tag: 4.0.13
+
+# Rollbacks of Helm charts containing StatefulSet resources can be a tricky operation, and are one of the 
+# main reasons automated rollbacks are not enabled by default. Verify a manual rollback (using helm) of your 
+# Helm chart does not cause any problems before enabling it.
+# spec:
+#   rollback:
+#     enable: true
+#     retry: true
+#     maxRetries: 5
