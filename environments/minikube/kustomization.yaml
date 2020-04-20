@@ -4,7 +4,7 @@ kind: Kustomization
 # BASES FOLDER ARE DIVIDED BY NAMESPACE
 
 bases:
-  - ../bases/flux
+  - flux
   - services
   # - istio
   # - flagger
