@@ -1,16 +1,61 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# namespace you be placed at top parent
+namespace: flux-system
+
+# Create flux-system ns
+resources:
+  - namespace.yaml
+
 bases:
   - ../../../bases/flux/flux
   - ../../../bases/flux/memcached
   - ../../../bases/flux/helm-operator
 
-# Modify namespace where flux will live
-resources:
-  - namespace.yaml
-
+# Delete default flux ns using $patch command
 patchesStrategicMerge:
-  - flux-patch.yaml
-  - helm-operator-patch.yaml
+  - delete-default-ns.yaml # delete action can only be done using patchesStrategicMerge
+
+patchesJson6902:
+  # Replace helm operator arguments
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: helm-operator
+      namespace: flux
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/args
+        value:
+          - --enabled-helm-versions=v3
+
+  # Replace flux operator arguments
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: flux
+      namespace: flux
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/args
+        value:
+          - --manifest-generation=true
+          - --memcached-hostname=memcached.flux-system
+          - --memcached-service=
+          - --ssh-keygen-dir=/var/fluxd/keygen
+
+          - --git-path=staging/minikube
+          - --git-branch=master
+          - --git-url=git@github.com:jojoooo1/java-demo-flux
+
+          - --git-label=flux-sync
+          - --git-user=Flux
+          - --git-email=chevalier.jonathan@live.fr
+
+          - --git-poll-interval=5m # d.
+
+          # Delete resources that were created by fluxd, but are no longer in the git repo
+          - --sync-garbage-collection=true
+          - --sync-interval=5m # d.

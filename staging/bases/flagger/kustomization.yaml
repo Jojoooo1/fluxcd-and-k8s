@@ -1,13 +1,29 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# namespace you be placed at top parent
+namespace: flagger-system
 
 bases:
   - ../../../bases/flagger/flagger
   - ../../../bases/flagger/prometheus
-patchesStrategicMerge:
-  - patch.yaml
 
 resources:
-  - namespace.yaml
+- namespace.yaml
+
+patchesJson6902:
+  # Replace flagger operator arguments
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: flagger
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/args
+        value:
+          - -log-level=info
+          - -mesh-provider=kubernetes
+          - -metrics-server=http://flagger-prometheus:9090
+          - -slack-user=flagger
+          - -slack-channel=
+          - -slack-url=
