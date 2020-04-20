@@ -22,8 +22,8 @@ metadata:
   name: java-demo-routes
   namespace: staging
 spec:
-  # gateways:
-  #   - public-gateway.istio-system.svc.cluster.local
+  gateways:
+    - public-gateway.istio-system.svc.cluster.local
   hosts:
     - java-demo-backend-service.staging.svc.cluster.local
 
