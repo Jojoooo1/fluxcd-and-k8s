@@ -10,7 +10,7 @@ spec:
   chart:
     repository: https://flagger.app
     name: flagger
-    version: 0.27.0
+    version: 0.27.0 # mandatory
   values:
     crd.create: false
     meshProvider: istio

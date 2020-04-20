@@ -10,7 +10,7 @@ spec:
   chart:
     repository: https://flagger.app
     name: grafana
-    version: 1.4.0
+    version: 1.4.0 # mandatory
   values:
     url: http://prometheus.istio-system:9090
     user: admin
