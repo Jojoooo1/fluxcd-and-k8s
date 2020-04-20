@@ -3,8 +3,8 @@ kind: Kustomization
 
 namespace: staging
 
-resources:
-  - mongodb.yaml
+# resources:
+#   - mongodb.yaml
 
 # Gets flux operator default value
 bases:
