@@ -7,7 +7,7 @@ bases:
   - ../../../bases/istio
 
 resources:
-  - controle-plane.yaml
+  - control-plane.yaml
   - istio-metrics.yaml
   - istio-gateway.yaml
   - namespace.yaml
