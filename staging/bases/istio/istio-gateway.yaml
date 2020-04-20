@@ -22,14 +22,13 @@ metadata:
   name: java-demo-backend-service
 
 spec:
-  gateways:
-    - public-gateway.istio-system.svc.cluster.local
+  # gateways:
+  #   - public-gateway.istio-system.svc.cluster.local
   hosts:
     - java-demo-backend-service.staging.svc.cluster.local
 
   http:
-  - route:
-      - destination:
-          host: java-demo-backend-service.staging.svc.cluster.local
-          port:
-            number: 8080
+    - name: "backend-route"
+      route:
+        - destination:
+            host: java-demo-backend-service.staging.svc.cluster.local
