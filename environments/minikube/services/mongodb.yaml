@@ -1,0 +1,29 @@
+---
+# testing purpose
+# apiVersion: helm.fluxcd.io/v1
+# kind: HelmRelease
+# metadata:
+#   name: mongodb
+#   annotations:
+#     fluxcd.io/automated: "true"
+#     fluxcd.io/tag.chart-image: semver:~4.0
+
+# spec:
+#   releaseName: mongodb
+#   chart:
+#     repository: https://kubernetes-charts.storage.googleapis.com/
+#     name: mongodb
+#     version: 7.6.3
+#   values:
+#     image:
+#       repository: bitnami/mongodb
+#       tag: 4.0.13
+
+# Rollbacks of Helm charts containing StatefulSet resources can be a tricky operation, and are one of the 
+# main reasons automated rollbacks are not enabled by default. Verify a manual rollback (using helm) of your 
+# Helm chart does not cause any problems before enabling it.
+# spec:
+#   rollback:
+#     enable: true
+#     retry: true
+#     maxRetries: 5
