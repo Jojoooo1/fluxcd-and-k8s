@@ -22,8 +22,8 @@ metadata:
 spec:
   gateways:
   - public-gateway.istio-system.svc.cluster.local
-  # hosts:
-  # - java-demo-backend-service
+  hosts:
+  -  java-demo-backend-service.staging.svc.cluster.local
 
   http:
   - match:
