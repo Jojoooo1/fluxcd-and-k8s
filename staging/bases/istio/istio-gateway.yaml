@@ -32,6 +32,6 @@ spec:
 
     route:
       - destination:
-          host: java-demo-backend-service
+          host: java-demo-backend-service.staging.svc.cluster.local
           port:
             number: 8080
