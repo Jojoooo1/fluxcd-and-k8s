@@ -7,8 +7,9 @@ bases:
   - ../../../bases/istio
 
 resources:
-  - istio-gateway.yaml
+  - controle-plane.yaml
   - istio-metrics.yaml
+  - istio-gateway.yaml
   - namespace.yaml
 
 patchesStrategicMerge:
