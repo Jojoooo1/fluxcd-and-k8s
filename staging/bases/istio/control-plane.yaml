@@ -4,6 +4,7 @@ kind: IstioOperator
 metadata:
   namespace: istio-system
   name: istio-default
+
 spec:
   profile: default
   components:
