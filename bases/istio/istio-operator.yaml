@@ -177,6 +177,7 @@ kind: Deployment
 metadata:
   namespace: istio-operator
   name: istio-operator
+
 spec:
   replicas: 1
   selector:

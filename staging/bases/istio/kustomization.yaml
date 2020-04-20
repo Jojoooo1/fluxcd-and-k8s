@@ -9,3 +9,7 @@ bases:
 resources:
   - istio-gateway.yaml
   - istio-metrics.yaml
+  - namespace.yaml
+
+patchesStrategicMerge:
+  - delete-default-ns.yaml
