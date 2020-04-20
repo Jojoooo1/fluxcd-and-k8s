@@ -3,3 +3,6 @@ kind: Namespace
 
 metadata:
   name: staging
+
+  labels:
+    istio-injection: enabled
