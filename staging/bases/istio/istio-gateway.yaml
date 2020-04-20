@@ -21,7 +21,7 @@ metadata:
   name: java-demo-backend-service
 spec:
   gateways:
-  - default-gateway.istio-system.svc.cluster.local
+  - public-gateway.istio-system.svc.cluster.local
   # hosts:
   # - java-demo-backend-service
 
