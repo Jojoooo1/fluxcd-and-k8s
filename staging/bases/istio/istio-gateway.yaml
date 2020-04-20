@@ -7,6 +7,7 @@ metadata:
 spec:
   selector:
     istio: ingressgateway
+
   servers:
     - port:
         number: 80
@@ -19,11 +20,12 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: java-demo-backend-service
+
 spec:
   gateways:
-  - public-gateway.istio-system.svc.cluster.local
+    - public-gateway.istio-system.svc.cluster.local
   hosts:
-  -  java-demo-backend-service.staging.svc.cluster.local
+    - java-demo-backend-service.staging.svc.cluster.local
 
   http:
   - match:
