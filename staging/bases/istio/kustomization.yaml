@@ -4,4 +4,8 @@ kind: Kustomization
 namespace: istio-system
 
 bases:
-  - ../../../bases/flagger
+  - ../../../bases/istio
+
+resources:
+  - istio-gateway.yaml
+  - istio-metrics.yaml

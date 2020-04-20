@@ -8,10 +8,7 @@ resources:
   - namespace.yaml
 
 bases:
-  - ../../../bases/flux/flux
-  - ../../../bases/flux/memcached
-  - ../../../bases/flux/helm-operator
-  - ../../../bases/flux/sealed-secret
+  - ../../../bases/flux
 
 # Delete default flux ns using $patch command
 patchesStrategicMerge:

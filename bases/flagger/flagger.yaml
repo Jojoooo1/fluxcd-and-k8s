@@ -1,0 +1,23 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+
+metadata:
+  name: flagger
+  namespace: istio-system
+
+spec:
+  releaseName: flagger
+  chart:
+    repository: https://flagger.app
+    name: flagger
+    # version: 0.27.0 # will get the last one
+  values:
+    crd.create: false
+    meshProvider: istio
+    metricsServer: http://prometheus.istio-system:9090
+
+
+
+# --set slack.url=https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK \
+# --set slack.channel=general \
+# --set slack.user=flagger
