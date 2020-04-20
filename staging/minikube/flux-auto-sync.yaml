@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-demo-database-deployment
+  namespace: staging
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: java-demo-database
+      containers:
+      - image: mysql:8.0.19
+        name: java-demo-database
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: mongodb
+  namespace: staging
+spec:
+  values:
+    image:
+      tag: 4.0.14
