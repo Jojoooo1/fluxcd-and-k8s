@@ -7,27 +7,26 @@ metadata:
 spec:
   mtls:
     mode: STRICT
-# ---
-
-# https://istio.io/faq/security/#mysql-with-mtls
-# PERMISSIVE mode, which is enabled in the demo configuration profile, does not work with MySQL
-apiVersion: "authentication.istio.io/v1alpha1"
-kind: "Policy"
-metadata:
-  name: mysql-mtls-authn
-spec:
-  targets:
-  - name: java-demo-database-service     # The name of *your* K8s Service
-  peers:
-  - mtls:
-      mode: STRICT
 ---
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: mysql-mtls-dr
-spec:
-  host: java-demo-database-service     # The name of *your* K8s Service
-  trafficPolicy:
-    tls:
-      mode: ISTIO_MUTUAL
+# https://istio.io/faq/security/#mysql-with-mtls
+# 
+# apiVersion: "authentication.istio.io/v1alpha1"
+# kind: "Policy"
+# metadata:
+#   name: mysql-mtls-authn
+# spec:
+#   targets:
+#   - name: java-demo-database-service
+#   peers:
+#   - mtls:
+#       mode: STRICT
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: DestinationRule
+# metadata:
+#   name: mysql-mtls-dr
+# spec:
+#   host: java-demo-database-service
+#   trafficPolicy:
+#     tls:
+#       mode: ISTIO_MUTUAL
