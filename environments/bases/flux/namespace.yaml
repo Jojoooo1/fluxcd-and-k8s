@@ -4,8 +4,6 @@ kind: Namespace
 
 metadata:
   name: flux-system
-  labels:
-    istio-injection: enabled
   
   # annotations:
   #   linkerd.io/inject: disabled
