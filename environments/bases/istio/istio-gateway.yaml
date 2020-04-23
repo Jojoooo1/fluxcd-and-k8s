@@ -15,13 +15,13 @@ spec:
         protocol: HTTP
       hosts:
         - "*"
-
-    - port:
-        number: 2379 # to expose internal service via external port 2379
-        name: mysql
-        protocol: mysql
-      hosts:
-        - "*"
+    # disable by default needs to be activated in Pilot for security reason
+    # - port:
+    #     number: 3306
+    #     name: mysql
+    #     protocol: mysql
+    #   hosts:
+    #     - "*"
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -32,10 +32,9 @@ metadata:
 spec:
   gateways:
     - public-gateway.istio-system.svc.cluster.local
-    
   hosts:
-    - "*"
-    # - java-demo-backend-service.staging.svc.cluster.local
+    # - "*"
+    - java-demo-backend-service.staging.svc.cluster.local
 
   http:
     - name: "java-demo-backend"
@@ -44,27 +43,3 @@ spec:
             host: java-demo-backend-service.staging.svc.cluster.local
             port:
               number: 8080
-
----
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-metadata:
-  name: mysql-virtual-service
-  namespace: staging
-
-spec:
-  hosts:
-    - "*"
-    # - java-demo-database-service.staging.svc.cluster.local
-
-  gateways:
-    - public-gateway.istio-system.svc.cluster.local
-
-  tcp:
-  - match:
-    - port: 3306
-    route:
-    - destination:
-        host: java-demo-database-service.staging.svc.cluster.local
-        port:
-          number: 3306
