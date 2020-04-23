@@ -1,5 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+# Manifeste created from istioctl with default profile with values.global.jwtPolicy=first-party-jwt
 resources:
-  - istio-operator.yaml
+  - istio-namespace.yaml
+  - istio-manifest-crd.yaml
+  - istio-manifest-init.yaml

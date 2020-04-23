@@ -7,10 +7,19 @@ bases:
   - ../../../bases/istio
 
 resources:
-  - control-plane.yaml
-  - istio-metrics.yaml
   - istio-gateway.yaml
-  - namespace.yaml
 
-patchesStrategicMerge:
-  - delete-default-ns.yaml
+patchesJson6902:
+  # Replace flux operator arguments
+  - target:
+      group: apps
+      version: v1
+      kind: Deployment
+      name: istiod
+      namespace: istio-system
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests
+        value:
+          cpu: 10m
+          memory: 100Mi

@@ -1,0 +1,9 @@
+# mutual TLS for the entire mesh
+apiVersion: "security.istio.io/v1beta1"
+kind: "PeerAuthentication"
+metadata:
+  name: "default"
+  namespace: "istio-system"
+spec:
+  mtls:
+    mode: STRICT # STRICT = if can not upgrade to TLS then refuse connection

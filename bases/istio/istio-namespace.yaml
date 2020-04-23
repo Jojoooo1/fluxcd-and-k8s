@@ -1,6 +1,5 @@
----
+# Needs to create the namespace
 apiVersion: v1
 kind: Namespace
-
 metadata:
   name: istio-system
