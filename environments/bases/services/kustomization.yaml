@@ -23,7 +23,6 @@ patchesStrategicMerge:
 resources:
   - common/namespace.yaml
   - common/rbac.yaml
-  - java-demo/backend/virtual-service.yaml
 
 # var: can be referenced in YAML as $(MY_VAR_NAME)
 # vars:

@@ -5,6 +5,6 @@ bases:
   - ../../../bases/istio
 
 resources:
-  - operator-config.yaml
+  - control-plane.yaml
   - gateway.yaml
   # - istio-mtls-strict.yaml
