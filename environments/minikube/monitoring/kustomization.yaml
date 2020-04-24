@@ -3,5 +3,8 @@ kind: Kustomization
 
 namespace: prometheus-system
 
+resources:
+  - namespace.yaml
+
 bases:
   - ../../../bases/monitoring
