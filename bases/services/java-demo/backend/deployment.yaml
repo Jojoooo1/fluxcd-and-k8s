@@ -72,8 +72,8 @@ spec:
           # RESOURCES becarefull with container compatibility
           resources:
             requests:
-              memory: "512Mi" # jib: -Xms512m # 94, 76.412 seconds 
+              memory: "128Mi" # jib: -Xms512m # 94, 76.412 seconds 
               cpu: "0.5"
             limits:
-              memory: "1024Mi" # jib: -Xmx1024m
+              memory: "256Mi" # jib: -Xmx1024m
               cpu: "1"
