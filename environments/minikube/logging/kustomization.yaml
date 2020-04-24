@@ -4,7 +4,4 @@ kind: Kustomization
 namespace: kube-system
 
 bases:
-  - ../../bases/monitoring
-
-# resources:
-#   - istio-gateway.yaml
+  - ../../bases/logging
