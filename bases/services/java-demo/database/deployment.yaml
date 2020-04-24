@@ -5,7 +5,8 @@ kind: Deployment
 metadata:
   name: java-demo-database-deployment
   labels:
-    app: java-demo
+    app: java-demo # will be used by kialis
+    # version: can be use by kialis
     role: database
 
 spec:

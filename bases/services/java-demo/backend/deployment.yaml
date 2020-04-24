@@ -5,7 +5,7 @@ kind: Deployment
 metadata:
   name: java-demo-backend-deployment 
   labels:
-    app: java-demo
+    app: java-demo # will be used by kialis
     role: backend
 
 spec:
