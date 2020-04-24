@@ -19,5 +19,6 @@ spec:
     name: prometheus-operator
     version: 8.13.2
     # allows Prometheus operator to watch serviceMonitors outside of his namespace.
+    prometheusOperator.createCustomResource: false
     prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
     fullnameOverride: prometheus
