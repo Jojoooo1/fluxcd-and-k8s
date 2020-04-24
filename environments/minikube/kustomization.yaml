@@ -7,4 +7,4 @@ bases:
   - flux
   - services
   - istio
-  - logging
+  # - logging

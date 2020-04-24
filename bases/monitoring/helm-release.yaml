@@ -1,0 +1,23 @@
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring-system
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: prometheus
+  namespace: monitoring-system
+  annotations:
+    fluxcd.io/ignore: "true"
+
+spec:
+  releaseName: prometheus
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: prometheus-operator
+    version: 8.13.2
+    # allows Prometheus operator to watch serviceMonitors outside of his namespace.
+    prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
+    fullnameOverride: prometheus
