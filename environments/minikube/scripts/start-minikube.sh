@@ -6,7 +6,7 @@ if [[ ! -x "$(command -v kubectl)" ]]; then
   exit 1
 fi
 
-if [[ ! -x "$(command -v kubkustomizeectl)" ]]; then
+if [[ ! -x "$(command -v kustomize)" ]]; then
   echo "kustomize not found"
   exit 1
 fi
@@ -18,7 +18,7 @@ fi
 
 # Starts flux operator (did not used kubectl because it uses Kustomize v2.0.3)
 kustomize build ../flux | kubectl apply -f -
-# Verify deployment
+# Verify deployment status
 kubectl -n flux-system rollout status deployment/flux
 # Synchronize deployment
 fluxctl sync --k8s-fwd-ns flux-system

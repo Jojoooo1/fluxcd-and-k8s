@@ -1,9 +1,8 @@
 # Istio operator 1.5.2 
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: istio-operator
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: istio-operator
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition

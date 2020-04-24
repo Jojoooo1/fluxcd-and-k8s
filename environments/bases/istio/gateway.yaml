@@ -15,10 +15,5 @@ spec:
         protocol: HTTP
       hosts:
         - "*"
-    # disable by default needs to be activated in Pilot for security reason
-    # - port:
-    #     number: 3306
-    #     name: mysql
-    #     protocol: mysql
-    #   hosts:
-    #     - "*"
+    # protocol: mysql disable by default needs to be activated in Pilot for security reason
+
