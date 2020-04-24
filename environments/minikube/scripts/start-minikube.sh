@@ -16,22 +16,31 @@ if [[ ! -x "$(command -v fluxctl)" ]]; then
   exit 1
 fi
 
-# Starts flux operator (did not used kubectl because it uses Kustomize v2.0.3)
-kustomize build ../flux | kubectl apply -f -
+# Starts istio first for proxy injection purpose
+kustomize build ../../../bases/istio | kubectl apply -f -
+kustomize build ../istio | kubectl apply -f -
 
-echo ">>> Waiting for flux to start"
-kubectl -n flux-system rollout status deployment/flux
-echo ">>> flux is ready"
-
-echo ">>> Waiting for flux to sync"
-fluxctl sync --k8s-fwd-ns flux-system
-echo ">>> flux sync is done"
-
+echo
 echo ">>> Waiting for istiod to start"
-until kubectl -n istio-system get deploy istiod | grep "1/1"; do
+until kubectl -n istio-system get deploy istiod | grep "1/1"; do # INFO: CRD are created by istio operator
   sleep 5
 done
 echo ">>> Istio control plane is ready"
+
+# Starts flux operator
+kustomize build ../flux | kubectl apply -f -
+
+echo
+echo ">>> Waiting for flux to start"
+kubectl -n flux-system rollout status deployment/flux
+echo ">>> flux deployment is done"
+
+sleep 10
+
+echo
+echo ">>> Waiting for flux to sync"
+fluxctl sync --k8s-fwd-ns flux-system
+echo ">>> flux sync is done"
 
 # Gets the public SSH Keys to authorize flux to commit to github
 # kubectl -n flux-system logs deployment/flux | grep identity.pub | cut -d '"' -f2 # Replaced by a personal key in order to keep a single ssh key in github
