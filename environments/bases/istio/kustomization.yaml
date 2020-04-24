@@ -9,4 +9,4 @@ resources:
 
 # Delete default istio ns using $patch command
 patchesStrategicMerge:
-  - delete-default-ns.yaml # delete action can only be done using patchesStrategicMerge
+  - patch-default-ns.yaml # delete action can only be done using patchesStrategicMerge

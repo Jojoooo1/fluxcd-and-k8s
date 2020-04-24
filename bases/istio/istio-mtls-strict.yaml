@@ -1,0 +1,32 @@
+# mutual TLS for the entire mesh
+apiVersion: "security.istio.io/v1beta1"
+kind: "PeerAuthentication"
+metadata:
+  name: "default"
+  namespace: "istio-system"
+spec:
+  mtls:
+    mode: STRICT
+---
+# https://istio.io/faq/security/#mysql-with-mtls
+# 
+# apiVersion: "authentication.istio.io/v1alpha1"
+# kind: "Policy"
+# metadata:
+#   name: mysql-mtls-authn
+# spec:
+#   targets:
+#   - name: java-demo-database-service
+#   peers:
+#   - mtls:
+#       mode: STRICT
+# ---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: DestinationRule
+# metadata:
+#   name: mysql-mtls-dr
+# spec:
+#   host: java-demo-database-service
+#   trafficPolicy:
+#     tls:
+#       mode: ISTIO_MUTUAL
