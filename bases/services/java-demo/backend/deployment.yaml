@@ -60,14 +60,14 @@ spec:
               port: container-port
               path: /actuator/health
             periodSeconds: 10 # d.
-            failureThreshold: 3 # d.
-
+            failureThreshold: 4 # d.
+          # TODO: Creates better one
           livenessProbe:
             httpGet:
               port: container-port
               path: /actuator/info
             periodSeconds: 10 # d.
-            failureThreshold: 3 # d.
+            failureThreshold: 4 # d.
           # 
           # RESOURCES becarefull with container compatibility
           resources:

@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: public-gateway
+  # namespace: istio-system
+
+spec:
+  selector:
+    istio: ingressgateway
+
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+    # disable by default needs to be activated in Pilot for security reason
+    # - port:
+    #     number: 3306
+    #     name: mysql
+    #     protocol: mysql
+    #   hosts:
+    #     - "*"
