@@ -6,7 +6,3 @@ bases:
 
 resources:
   - control-plane.yaml
-
-# Delete default istio ns using $patch command
-patchesStrategicMerge:
-  - patch-default-ns.yaml # delete action can only be done using patchesStrategicMerge
