@@ -4,4 +4,4 @@ kind: Kustomization
 namespace: monitoring-system
 
 bases:
-  - ../../../bases/monitoring
+  - ../../bases/monitoring

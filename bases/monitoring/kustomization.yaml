@@ -9,4 +9,5 @@ resources:
   - crds/crd-prometheusrules.yaml
   - crds/crd-servicemonitor.yaml
   - crds/crd-thanosrulers.yaml
+  - namespace.yaml
   - helm-release.yaml
