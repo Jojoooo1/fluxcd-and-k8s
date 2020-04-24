@@ -20,4 +20,4 @@ spec:
       prometheusOperator.createCustomResource: false
       # allows Prometheus operator to watch serviceMonitors outside of his namespace.
       prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
-      fullnameOverride: prometheus-operator
+      fullnameOverride: prometheus
