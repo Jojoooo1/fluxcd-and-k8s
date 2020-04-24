@@ -6,3 +6,6 @@ namespace: staging
 # Gets flux operator default value
 bases:
   - ../../bases/services
+
+resources:
+  - database/storage.yaml

@@ -29,9 +29,9 @@ spec:
         - name: java-demo-backend
           image: docker.io/jojoooo1/carros
           # imagePullPolicy: Always # d.
-          # env:
-          #   - name: JAVA_TOOL_OPTIONS # used by distroless image
-          #     value:
+          env:
+            - name: JAVA_TOOL_OPTIONS # used by distroless image
+              value: "-Xms128m -Xmx256m"
           ports:
             - name: container-port
               containerPort: 8080
@@ -72,8 +72,8 @@ spec:
           # RESOURCES becarefull with container compatibility
           resources:
             requests:
-              memory: "512Mi" # jib: -Xms256m # 94, 76.412 seconds 
+              memory: "512Mi" # jib: -Xms512m # 94, 76.412 seconds 
               cpu: "0.5"
             limits:
-              memory: "1024Mi" # jib: -Xmx512m
-              cpu: "0.5"
+              memory: "1024Mi" # jib: -Xmx1024m
+              cpu: "1"
