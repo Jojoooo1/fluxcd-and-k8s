@@ -35,7 +35,7 @@ echo ">>> Waiting for flux to start"
 kubectl -n flux-system rollout status deployment/flux
 echo ">>> flux deployment is done"
 
-sleep 10
+sleep 20
 
 echo
 echo ">>> Waiting for flux to sync"
