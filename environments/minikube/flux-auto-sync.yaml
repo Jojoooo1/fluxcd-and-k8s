@@ -2,6 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: java-demo-backend-deployment
+  namespace: staging
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: java-demo-backend
+      containers:
+      - image: docker.io/jojoooo1/carros:rc-1.1.0-624ff97e92dd06c091d48d51e8f71e513a950ffa
+        name: java-demo-backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: java-demo-database-deployment
   namespace: staging
 spec:
