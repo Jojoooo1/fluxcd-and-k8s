@@ -3,5 +3,7 @@ kind: Namespace
 
 metadata:
   name: staging
+  
+  # Enable auto injection of istio proxy in every pod
   labels:
     istio-injection: enabled

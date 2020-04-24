@@ -1,3 +1,5 @@
+# Authorization for Java application
+
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role # namespace scoped | CluserRole is cluster scoped (could have used ClusterRole with a RoleBinding scoped within a namespace in order to reuse the role)
 
