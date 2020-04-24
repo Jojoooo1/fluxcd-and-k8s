@@ -1,5 +1,5 @@
 # Istio operator 1.5.2 (All others CRD are created by the operator)
-# ---
+---
 apiVersion: v1
 kind: Namespace
 metadata:
