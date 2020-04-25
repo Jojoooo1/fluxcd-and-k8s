@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
+  namespace: staging
 spec:
   type: NodePort
   ports:
@@ -18,14 +19,13 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
-  name: prometheus
-
+  name: service-prometheus
+  namespace: staging
 spec:
   serviceAccountName: prometheus
   serviceMonitorSelector:
     matchLabels:
-      env: staging
+      team: java-demo
 
-  resources:
-    requests:
-      memory: 200Mi
+  logLevel: info
+  retention: 1d

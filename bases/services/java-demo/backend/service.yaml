@@ -5,10 +5,10 @@ kind: Service
 metadata:
   # dns
   name: java-demo-backend-service
-  # namespace: java-demo
   labels:
     app: java-demo
     role: backend
+    team: java-demo
 
 spec:
   selector:
