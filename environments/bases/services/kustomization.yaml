@@ -20,8 +20,9 @@ resources:
   - common/rbac.yaml
 
   - java-demo/backend/service-monitor.yaml
-  - java-demo/prometheus/prometheus.yaml
-  - java-demo/prometheus/roles.yaml
+
+  - prometheus/prometheus.yaml
+  - prometheus/cluster-role-binding.yaml
 
   - gateway.yaml
 
