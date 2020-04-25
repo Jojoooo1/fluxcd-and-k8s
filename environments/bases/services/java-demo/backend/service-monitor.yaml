@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: java-demo-backend-service-monitor
+  labels:
+    env: staging # used to be retrieved by Prometheus
+
+spec:
+
+  namespaceSelector:
+    matchNames:
+      - staging
+  # Service selector
+  selector:
+    matchLabels:
+      app: java-demo
+      role: backend
+  
+  endpoints:
+  - port: 8080
+    path: "/actuator/prometheus"
+
+  
