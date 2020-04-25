@@ -19,5 +19,6 @@ spec:
   endpoints:
   - port: container-port
     path: "/actuator/prometheus"
+    interval: 10s
 
   

@@ -16,5 +16,5 @@ rules:
   resources:
   - configmaps
   verbs: ["get"]
-- nonResourceURLs: ["/metrics"]
+- nonResourceURLs: ["/metrics", "actuator/prometheus"]
   verbs: ["get"]
