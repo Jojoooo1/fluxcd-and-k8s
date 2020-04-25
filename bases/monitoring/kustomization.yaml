@@ -10,6 +10,5 @@ resources:
   - crds/crd-servicemonitor.yaml
   - crds/crd-thanosrulers.yaml
   - rbac/cluster-role.yaml
-  - rbac/service-account.yaml
   - namespace.yaml
   - helm-release.yaml
