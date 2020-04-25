@@ -17,7 +17,7 @@ spec:
       team: java-demo
   
   endpoints:
-  - port: container-port
+  - targetPort: 8080
     path: "/actuator/prometheus"
     interval: 10s
 
