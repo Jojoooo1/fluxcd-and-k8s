@@ -17,7 +17,7 @@ spec:
       team: java-demo
   
   endpoints:
-  - port: 8080
+  - port: container-port
     path: "/actuator/prometheus"
 
   
