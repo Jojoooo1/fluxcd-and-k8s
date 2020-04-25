@@ -23,7 +23,7 @@ kustomize build ../../../bases/istio | kubectl apply -f -
 kustomize build ../istio | kubectl apply -f -
 
 echo
-echo ">>> Waiting for istiod to start"
+echo ">>> Waiting for istiod to start for proxy injection purposes"
 until kubectl -n istio-system get deploy istiod | grep "1/1"; do # INFO: CRD are created by istio operator
   sleep 10
 done

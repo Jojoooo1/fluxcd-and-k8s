@@ -3,5 +3,13 @@ kind: Kustomization
 
 namespace: monitoring-system
 
+resources:
+  - pv/prometheus-pv.yaml
+  - pv/alertmanager-pv.yaml
+  - pv/grafana-pv.yaml
+
 bases:
   - ../../bases/monitoring
+
+patchesStrategicMerge:
+  - patch-helm-value.yaml

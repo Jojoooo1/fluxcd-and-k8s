@@ -2,13 +2,13 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: prometheus-operator
+  name: prometheus
   namespace: monitoring-system
   # annotations:
   #   fluxcd.io/ignore: "true"
 
 spec:
-  releaseName: prometheus-operator
+  releaseName: prometheus
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: prometheus-operator

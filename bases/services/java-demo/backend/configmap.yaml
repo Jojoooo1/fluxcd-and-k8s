@@ -25,12 +25,16 @@ data:
             show_sql: true
             format_sql: true
 
-      h2:
-        console:
-          enabled: false
-
       liquibase:
         change-log: classpath:/db/db.changelog-master.xml
-    #               
+
+    # Logging configuration              
     logging:
       config: classpath:log4j2-dev.xml
+    
+    # Metrics configurations
+    management:
+      endpoints:    
+        web:
+          exposure:
+            include: "health,info,prometheus"

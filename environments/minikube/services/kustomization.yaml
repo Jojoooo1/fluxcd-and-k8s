@@ -8,4 +8,4 @@ bases:
   - ../../bases/services
 
 resources:
-  - database/storage.yaml
+  - database/pv.yaml
