@@ -18,6 +18,11 @@ patchesStrategicMerge:
 resources:
   - common/namespace.yaml
   - common/rbac.yaml
+
+  - java-demo/backend/service-monitor.yaml
+  - java-demo/prometheus/prometheus.yaml
+  - java-demo/prometheus/roles.yaml
+
   - gateway.yaml
 
 # var: can be referenced in YAML as $(MY_VAR_NAME)
