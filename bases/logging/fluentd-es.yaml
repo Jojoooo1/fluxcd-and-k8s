@@ -1,0 +1,15 @@
+# https://github.com/kiwigrid/helm-charts/tree/master/charts/fluentd-elasticsearch
+
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: fluentd-elasticsearch
+  namespace: fluxcd
+  annotations:
+    fluxcd.io/ignore: "false"
+spec:
+  releaseName: fluentd-elasticsearch
+  chart:
+    repository: https://kubernetes-charts.storage.googleapis.com/
+    name: fluentd-elasticsearch
+    version: 2.4.0
