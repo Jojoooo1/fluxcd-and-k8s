@@ -8,4 +8,4 @@ bases:
   - services
   - istio
   - monitoring
-  # - logging
+  - logging
