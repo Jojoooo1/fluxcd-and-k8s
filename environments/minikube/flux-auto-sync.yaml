@@ -10,7 +10,7 @@ spec:
       $setElementOrder/containers:
       - name: java-demo-backend
       containers:
-      - image: docker.io/jojoooo1/carros:rc-1.1.0-28692bc0bf4a5ba90f9e0f2db199b783cafcdb5d
+      - image: docker.io/jojoooo1/carros:rc-1.1.0-6bd574d4ca3c7dcd59a8d9099a52da6d0ba5d438
         name: java-demo-backend
 ---
 apiVersion: apps/v1
