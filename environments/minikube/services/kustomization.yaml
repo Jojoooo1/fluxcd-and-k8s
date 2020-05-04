@@ -19,7 +19,7 @@ patchesStrategicMerge:
   - java-demo/backend/deployment-annotations.yaml
 
 resources:
-  - java-demo/namespace/java-demo.yaml
+  - namespace/java-demo.yaml
   
   - java-demo/database/pv.yaml
   - java-demo/backend/service-monitor-prom.yaml
