@@ -1,0 +1,13 @@
+# Authorization for Java application
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole # namespace scoped | CluserRole is cluster scoped (could have used ClusterRole with a RoleBinding scoped within a namespace in order to reuse the role)
+
+metadata:
+  name: namespace-read-role
+  # namespace: java-demo # only use this field for Role (ns scoped)
+
+rules:
+  - apiGroups: [""]
+    resources: ["configmaps", "pods", "services", "endpoints", "secrets"]
+    verbs: ["get", "list", "watch"]
