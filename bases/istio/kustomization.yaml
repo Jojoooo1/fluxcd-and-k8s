@@ -5,4 +5,4 @@ kind: Kustomization
 namespace: istio-system # needed because create istio ressources (first in start script) that uses a namespace 
 
 resources:
-- istio-operator.yaml
+  - istio-operator.yaml
