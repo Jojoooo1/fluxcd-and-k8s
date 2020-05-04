@@ -21,6 +21,7 @@ patchesStrategicMerge:
 
 resources:
   - namespace/java-demo.yaml
+  - rbac/spring-read-role-binding.yaml
   
   - java-demo/database/pv.yaml
   - java-demo/backend/service-monitor-prom.yaml
