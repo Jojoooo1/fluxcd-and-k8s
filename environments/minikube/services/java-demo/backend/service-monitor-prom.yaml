@@ -2,7 +2,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: java-demo-backend-service-monitor
-  namespace: staging
+  namespace: java-demo
   labels:
     team: java-demo
 
@@ -10,7 +10,7 @@ spec:
   # Namespace
   namespaceSelector:
     matchNames:
-      - staging
+      - java-demo
   # Service selector
   selector:
     matchLabels:

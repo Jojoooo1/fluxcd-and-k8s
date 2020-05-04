@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: public-gateway
-  namespace: staging
+  # namespace: staging
 
 spec:
   selector:
@@ -25,17 +25,17 @@ metadata:
 
 spec:
   gateways:
-    - public-gateway.staging.svc.cluster.local
+    - public-gateway.default.svc.cluster.local
   hosts:
     - "*"
-    # - java-demo-backend-service.staging.svc.cluster.local
+    # - java-demo-backend-service.default.svc.cluster.local
 
   http:
       # if multiple services use match
     - name: "java-demo-backend"
       route:
         - destination:
-            host: java-demo-backend-service.staging.svc.cluster.local
+            host: java-demo-backend-service.default.svc.cluster.local
             port:
               number: 8080
       
