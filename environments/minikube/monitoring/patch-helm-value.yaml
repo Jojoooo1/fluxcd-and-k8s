@@ -19,20 +19,20 @@ spec:
       prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
 
       # Define persistent storage for Prometheus (PVC)
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.volumeName: prometheus-pv
+      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.volumeName: prometheus-pv-claim
       prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes: ["ReadWriteOnce"]
       prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage: 50mi
 
       # Define persistent storage for Grafana (PVC)
       grafana.adminPassword: password
       grafana.persistence.enabled: true
-      grafana.persistence.storageClassName: grafana-pv
+      grafana.persistence.storageClassName: grafana-pv-claim
       grafana.persistence.accessModes:  ["ReadWriteOnce"]
       grafana.persistence.size: 50mi
 
       # Define persistent storage for Alertmanager (PVC)
       alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.accessModes: ["ReadWriteOnce"]
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.storageClassName: alertmanager-pv
+      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.storageClassName: alertmanager-pv-claim
       alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.resources.requests.storage: 50mi
 
       # Disable Etcd metrics
