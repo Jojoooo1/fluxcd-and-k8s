@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: staging
+namespace: java-demo
 
 # BE BECAREFULL IF CREATED CAN NOT CHANGE IT
 # => From apps/v1 on, a Deployment’s label selector is immutable after it gets created. (can fucked up your deployment)
@@ -19,6 +19,8 @@ patchesStrategicMerge:
   - java-demo/backend/deployment-annotations.yaml
 
 resources:
+  - java-demo/namespace/java-demo.yaml
+  
   - java-demo/database/pv.yaml
   - java-demo/backend/service-monitor-prom.yaml
   
