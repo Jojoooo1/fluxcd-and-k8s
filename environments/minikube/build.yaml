@@ -11,14 +11,12 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: monitoring-system
+  name: java-demo
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  labels:
-    istio-injection: enabled
-  name: staging
+  name: monitoring-system
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -16489,7 +16487,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prometheus
-  namespace: staging
+  namespace: java-demo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -16751,7 +16749,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: prometheus
-  namespace: staging
+  namespace: java-demo
 ---
 apiVersion: v1
 data:
@@ -16765,7 +16763,7 @@ data:
 kind: ConfigMap
 metadata:
   name: carros
-  namespace: staging
+  namespace: java-demo
 ---
 apiVersion: v1
 data:
@@ -16810,7 +16808,7 @@ metadata:
     role: backend
     team: java-demo
   name: java-demo-backend-service
-  namespace: staging
+  namespace: java-demo
 spec:
   ports:
   - port: 8080
@@ -16828,7 +16826,7 @@ metadata:
     app: java-demo
     role: database
   name: java-demo-database-service
-  namespace: staging
+  namespace: java-demo
 spec:
   ports:
   - port: 3306
@@ -16842,7 +16840,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
-  namespace: staging
+  namespace: java-demo
 spec:
   ports:
   - name: web
@@ -17060,7 +17058,7 @@ metadata:
     app: java-demo
     role: backend
   name: java-demo-backend-deployment
-  namespace: staging
+  namespace: java-demo
 spec:
   replicas: 1
   selector:
@@ -17113,7 +17111,7 @@ metadata:
     app: java-demo
     role: database
   name: java-demo-database-deployment
-  namespace: staging
+  namespace: java-demo
 spec:
   replicas: 1
   selector:
@@ -17204,7 +17202,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
   name: prometheus
-  namespace: staging
+  namespace: java-demo
 spec:
   resources:
     requests:
@@ -17220,7 +17218,7 @@ metadata:
   labels:
     team: java-demo
   name: java-demo-backend-service-monitor
-  namespace: staging
+  namespace: java-demo
 spec:
   endpoints:
   - interval: 10s
@@ -17329,6 +17327,19 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: mysql-pv-claim
+  namespace: java-demo
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: manual
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
   name: alertmanager-pv-claim
   namespace: monitoring-system
 spec:
@@ -17357,19 +17368,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: prometheus-pv-claim
   namespace: monitoring-system
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50Mi
-  storageClassName: manual
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pv-claim
-  namespace: staging
 spec:
   accessModes:
   - ReadWriteOnce
