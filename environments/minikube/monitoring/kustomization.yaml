@@ -9,7 +9,7 @@ resources:
   - pv/grafana-pv.yaml
 
 bases:
-  - ../../bases/monitoring
+  - ../../../bases/monitoring
 
 patchesStrategicMerge:
   - patch-helm-value.yaml

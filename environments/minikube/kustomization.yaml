@@ -4,8 +4,14 @@ kind: Kustomization
 # BASES FOLDER ARE DIVIDED BY NAMESPACE
 
 bases:
+  - namespace
+  - rbac
+  - ingress
+
   - flux
-  - services
   - istio
+  - logging
   - monitoring
   # - logging
+
+  - services

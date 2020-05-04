@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: java-demo-backend-service-monitor
+  namespace: staging
+  labels:
+    team: java-demo
+
+spec:
+  # Namespace
+  namespaceSelector:
+    matchNames:
+      - staging
+  # Service selector
+  selector:
+    matchLabels:
+      team: java-demo
+  
+  endpoints:
+  - targetPort: 8080
+    path: "/actuator/prometheus"
+    interval: 10s

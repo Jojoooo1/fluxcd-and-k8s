@@ -1,0 +1,8 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-demo-backend-deployment
+  annotations:
+    fluxcd.io/automated: "true"
+    fluxcd.io/tag.java-demo-backend: glob:rc-*

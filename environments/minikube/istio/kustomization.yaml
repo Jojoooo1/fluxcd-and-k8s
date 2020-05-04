@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: istio-system
 
 bases:
-  - ../../bases/istio
+  - ../../../bases/istio
 
-# resources:
-#   - istio-gateway.yaml
+resources:
+  - control-plane.yaml
