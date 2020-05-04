@@ -4,7 +4,6 @@ kind: ConfigMap
 
 metadata:
   name: carros
-  # namespace: java-demo
 
 data:
   application.yml: |-
