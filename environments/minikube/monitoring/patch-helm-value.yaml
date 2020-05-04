@@ -22,7 +22,7 @@ spec:
       # Define persistent storage for Prometheus (PVC)
       prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.volumeName: prometheus-pv
       prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes: ["ReadWriteOnce"]
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage: 50mi
+      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage: 10mi
 
       # Define persistent storage for Grafana (PVC)
       grafana.adminPassword: password

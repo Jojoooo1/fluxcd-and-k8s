@@ -14,19 +14,3 @@ spec:
 
   hostPath:
     path: "/mnt/data"
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: prometheus-pv-claim
-
-spec:
-  storageClassName: prometheus-pv
-  accessModes:
-    - ReadWriteOnce
-
-  resources:
-    requests:
-      storage: 10Mi
