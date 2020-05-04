@@ -24,5 +24,5 @@ spec:
       $setElementOrder/containers:
       - name: java-demo-database
       containers:
-      - image: mysql:8.0.19
+      - image: mysql:8.0.20
         name: java-demo-database
