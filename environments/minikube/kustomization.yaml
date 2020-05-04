@@ -4,7 +4,6 @@ kind: Kustomization
 # BASES FOLDER ARE DIVIDED BY NAMESPACE
 
 bases:
-  - namespace
   - rbac
   - ingress
 
