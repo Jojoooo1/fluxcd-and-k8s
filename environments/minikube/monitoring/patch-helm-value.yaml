@@ -24,8 +24,9 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: manual
-              volumeName: prometheus-pv
+              selector:
+                matchLabels:
+                  app: prometheus-pv
               accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
@@ -59,8 +60,6 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: manual
-              volumeName: alertmanager-pv
               selector:
                 matchLabels:
                   app: alertmanager-pv
