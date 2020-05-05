@@ -17161,22 +17161,46 @@ spec:
     name: prometheus-operator
     repository: https://kubernetes-charts.storage.googleapis.com/
     values:
-      alertmanager.alertmanagerSpec.retention: 120h
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.name: alertmanager-pvc
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.volumeName: alertmanager-pv
-      fullnameOverride: prometheus
-      grafana.adminPassword: password
-      grafana.persistence.enabled: true
-      grafana.persistence.existingClaim: grafana-pvc
-      grafana.persistence.type: pvc
+      alertmanager:
+        alertmanagerSpec:
+          resources: {}
+          retention: 120h
+          volumeClaimTemplate:
+            metadata:
+              name: alertmanager-pvc
+              namespace: monitoring-system
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              requests:
+                storage: 10Mi
+              volumeName: alertmanager-pv
+      grafana:
+        adminPassword: password
+        persistence:
+          enabled: true
+          existingClaim: grafana-pvc
+          type: pvc
       kubeControllerManager.enabled: false
       kubeEtcd.enabled: false
       kubeScheduler.enabled: false
-      prometheus.prometheusSpec.resources: {}
-      prometheus.prometheusSpec.retention: 14d
+      prometheus:
+        prometheusSpec:
+          resources: {}
+          retention: 14d
+          volumeClaimTemplate:
+            metadata:
+              name: prometheus-pvc
+              namespace: monitoring-system
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              requests:
+                storage: 10Mi
+              volumeName: prometheus-pv
       prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.metadata.name: prometheus-pvc
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.volumeName: prometheus-pv
+      prometheusOperator:
+        createCustomResource: false
       prometheusOperator.createCustomResource: false
     version: 8.13.2
   releaseName: prometheus
@@ -17271,15 +17295,14 @@ spec:
   capacity:
     storage: 10Mi
   claimRef:
-    name: grafana-pvc
+    name: alertmanager-pvc
+    namespace: monitoring-system
   hostPath:
     path: /mnt/data
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  labels:
-    app: prometheus-operator-grafana
   name: grafana-pv
 spec:
   accessModes:
@@ -17288,6 +17311,7 @@ spec:
     storage: 10Mi
   claimRef:
     name: grafana-pvc
+    namespace: monitoring-system
   hostPath:
     path: /mnt/data
 ---
@@ -17302,14 +17326,13 @@ spec:
     storage: 50Mi
   claimRef:
     name: mysql-pvc
+    namespace: java-demo
   hostPath:
     path: /mnt/data
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  labels:
-    app: prometheus-operator-prometheus
   name: prometheus-pv
 spec:
   accessModes:
@@ -17318,6 +17341,7 @@ spec:
     storage: 10Mi
   claimRef:
     name: prometheus-pvc
+    namespace: monitoring-system
   hostPath:
     path: /mnt/data
 ---
@@ -17327,6 +17351,11 @@ metadata:
   name: mysql-pvc
   namespace: java-demo
 spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
   volumeName: mysql-pv
 ---
 apiVersion: v1
@@ -17335,4 +17364,9 @@ metadata:
   name: grafana-pvc
   namespace: monitoring-system
 spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Mi
   volumeName: grafana-pv
