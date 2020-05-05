@@ -21,13 +21,13 @@ patchesStrategicMerge:
 
 resources:
   - java-demo/namespace.yaml
-  - java-demo/rbac/read-role-binding.yaml
+  - java-demo/rbac/read-namespace-role-binding.yaml
   
   - java-demo/database/pv.yaml
   - java-demo/backend/service-monitor-prom.yaml
   
-  - prometheus/prometheus.yaml
-  - prometheus/cluster-role-binding.yaml
+  # - prometheus/prometheus.yaml
+  # - prometheus/cluster-role-binding.yaml
 
 # var: can be referenced in YAML as $(MY_VAR_NAME)
 # vars:

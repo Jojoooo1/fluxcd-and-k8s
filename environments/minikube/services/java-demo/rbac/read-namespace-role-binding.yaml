@@ -2,17 +2,18 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 
 metadata:
-  name: namespace-read-rolebinding
-  namespace: java-demo #  Scope binding to namespace
+  name: read-namespace-rolebinding
+  namespace: java-demo
 
 # Target (User, Account, Group [...])
 subjects:
   - kind: ServiceAccount
-    name: default # default service created at pod level
-    namespace: java-demo
+    name: read-namespace
+    # namespace scoped by metadata.namespace
+    namespace: default # default
 
 # The Role
 roleRef:
   kind: ClusterRole
-  name: namespace-read-role
+  name: read-namespace-cluster-role
   apiGroup: rbac.authorization.k8s.io
