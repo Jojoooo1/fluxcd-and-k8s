@@ -2,7 +2,7 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: prometheus
+  name: prometheus-operator
   namespace: monitoring-system
   annotations:
     fluxcd.io/automated: "false" # do not update automatically to prevent damaging the system
