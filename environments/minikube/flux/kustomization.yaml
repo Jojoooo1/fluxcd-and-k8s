@@ -43,7 +43,7 @@ patchesJson6902:
 
           - --git-path=environments/minikube
           - --git-branch=master
-          - --git-url=git@github.com:jojoooo1/java-demo-flux
+          - --git-url=git@github.com:jojoooo1/fluxcd-and-k8s
 
           - --git-label=flux-sync
           - --git-user=Flux
