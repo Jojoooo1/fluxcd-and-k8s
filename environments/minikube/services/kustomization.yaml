@@ -16,8 +16,8 @@ bases:
   - ../../../bases/services/java-demo
   
 patchesStrategicMerge:
-  - java-demo/database/deployment-annotations.yaml
-  - java-demo/backend/deployment-annotations.yaml
+  - java-demo/database/deployment-patch.yaml
+  - java-demo/backend/deployment-patch.yaml
 
 resources:
   - namespace/java-demo.yaml
