@@ -11,32 +11,52 @@ spec:
   chart:
     values:
       # https://github.com/helm/charts/tree/master/stable/prometheus-operator#configuration
-      # fullnameOverride: prometheus
       
       ## Deployed PrometheusOperator instance Spec ##
       # CRD are created through kustomize (helm does not handle well CRD creation)
-      prometheusOperator.createCustomResource: false
+      prometheusOperator:
+        createCustomResource: false
 
       ## Deployed Prometheus instance Spec ##
-      prometheus.prometheusSpec.retention: "14d"
-      prometheus.prometheusSpec.resources: {} # limit
-
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.metadata.name: prometheus-pvc
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.metadata.namespace: monitoring-system
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.volumeName: prometheus-pv
-
+      prometheus:
+        prometheusSpec:
+          retention: "14d"
+          resources: {} # limit
+          #  storageSpec:
+          volumeClaimTemplate:
+            metadata:
+              name: prometheus-pvc
+              namespace: monitoring-system
+            spec:
+              volumeName: prometheus-pv
+              accessModes: ["ReadWriteOnce"]
+              requests:
+                storage: 10Mi
+      
       ## Deployed Grafana instance Spec ##
-      grafana.persistence.enabled: true
-      grafana.persistence.type: pvc
-      grafana.persistence.existingClaim: grafana-pvc
-      grafana.adminPassword: password
+      grafana:
+        adminPassword: password
+        persistence:
+          enabled: true
+          type: pvc
+          existingClaim: grafana-pvc
 
 
       ## Deployed AlertManager instance Spec ##
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.name: alertmanager-pvc
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.namespace: monitoring-system
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.volumeName: alertmanager-pv
-      alertmanager.alertmanagerSpec.retention: 120h
+      alertmanager:
+        alertmanagerSpec:
+          retention: "120h"
+          resources: {} # limit
+          #  storageSpec:
+          volumeClaimTemplate:
+            metadata:
+              name: alertmanager-pvc
+              namespace: monitoring-system
+            spec:
+              volumeName: alertmanager-pv
+              accessModes: ["ReadWriteOnce"]
+              requests:
+                storage: 10Mi
 
       # Disable Etcd metrics
       kubeEtcd.enabled: false
