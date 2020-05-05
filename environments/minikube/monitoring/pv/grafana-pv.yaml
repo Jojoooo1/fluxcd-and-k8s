@@ -9,7 +9,8 @@ spec:
   # Specifying a claimRef in a PV does not prevent the specified PVC from being bound to a different PV
   claimRef:
     name: grafana-pvc
-    namespace: monitoring-system # needed => kustomize does not add it
+    # needed => kustomize does not add it
+    namespace: monitoring-system
     
   capacity:
     storage: 10Mi
@@ -25,6 +26,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: grafana-pvc
   namespace: monitoring-system
+  
 spec:
   # Specifying a volumeName in your PVC does not prevent a different PVC from binding to the specified PV before 
   volumeName: grafana-pv
