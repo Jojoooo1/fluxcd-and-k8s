@@ -20,8 +20,8 @@ patchesStrategicMerge:
   - java-demo/backend/deployment-patch.yaml
 
 resources:
-  - namespace/java-demo.yaml
-  - role-binding/spring.yaml
+  - java-demo/namespace.yaml
+  - java-demo/rbac/read-role-binding.yaml
   
   - java-demo/database/pv.yaml
   - java-demo/backend/service-monitor-prom.yaml

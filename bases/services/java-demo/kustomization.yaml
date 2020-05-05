@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - database/service.yaml
   - database/deployment.yaml
+  
   - backend/configmap.yaml
   - backend/service.yaml
   - backend/deployment.yaml
