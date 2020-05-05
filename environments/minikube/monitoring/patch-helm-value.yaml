@@ -34,7 +34,7 @@ spec:
 
       ## Deployed AlertManager instance Spec ##
       alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.name: alertmanager-pvc
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.name: monitoring-system
+      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.namespace: monitoring-system
       alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.volumeName: alertmanager-pv
       alertmanager.alertmanagerSpec.retention: 120h
 
