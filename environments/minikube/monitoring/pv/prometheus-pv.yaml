@@ -2,8 +2,6 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: prometheus-pv
-  labels:
-    app: prometheus-operator-prometheus
 
 spec:
   # storageClassName: standard
@@ -11,7 +9,7 @@ spec:
   claimRef:
     name: prometheus-pvc
     namespace: monitoring-system # needed => kustomize does not add it
-    
+
   capacity:
     storage: 10Mi
   accessModes:

@@ -22,6 +22,7 @@ spec:
       prometheus.prometheusSpec.resources: {} # limit
 
       prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.metadata.name: prometheus-pvc
+      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.metadata.namespace: monitoring-system
       prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.volumeName: prometheus-pv
 
       ## Deployed Grafana instance Spec ##
@@ -33,6 +34,7 @@ spec:
 
       ## Deployed AlertManager instance Spec ##
       alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.name: alertmanager-pvc
+      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.name: monitoring-system
       alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.volumeName: alertmanager-pv
       alertmanager.alertmanagerSpec.retention: 120h
 
