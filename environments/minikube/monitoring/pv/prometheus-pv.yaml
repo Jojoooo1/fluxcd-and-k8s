@@ -10,7 +10,8 @@ spec:
   # Two way binding
   claimRef:
     name: prometheus-pvc
-
+    namespace: monitoring-system # needed => kustomize does not add it
+    
   capacity:
     storage: 10Mi
   accessModes:

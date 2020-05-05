@@ -7,6 +7,7 @@ spec:
   # Two way binding
   claimRef:
     name: mysql-pvc
+    namespace: java-demo # needed => kustomize does not add it
 
   capacity:
     storage: 50Mi
