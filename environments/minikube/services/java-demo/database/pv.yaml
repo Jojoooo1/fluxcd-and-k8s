@@ -23,7 +23,8 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
-
+  namespace: java-demo
+  
 spec:
   # Two way binding
   volumeName: mysql-pv

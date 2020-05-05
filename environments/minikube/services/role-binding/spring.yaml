@@ -3,14 +3,13 @@ kind: RoleBinding
 
 metadata:
   name: namespace-read-rolebinding
-  #  Scope this binding to a specific namespace
-  # namespace: java-demo
+  namespace: java-demo #  Scope binding to namespace
 
-# The Target: User, Account, Group etc.
+# Target (User, Account, Group [...])
 subjects:
   - kind: ServiceAccount
     name: default # default service created at pod level
-    # namespace: java-demo
+    namespace: java-demo
 
 # The Role
 roleRef:
