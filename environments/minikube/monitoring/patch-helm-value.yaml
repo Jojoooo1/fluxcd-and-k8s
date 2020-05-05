@@ -49,15 +49,15 @@ spec:
           retention: "120h"
           resources: {} # limit
           # not working chart seems to be still buggy
-          # storage:
-          #   volumeClaimTemplate:
-          #     spec:
-          #       storageClassName: manual
-          #       volumeName: alertmanager-pv
-          #       accessModes: ["ReadWriteOnce"]
-          #       resources:
-          #         requests:
-          #         storage: 10Mi
+          storage:
+            volumeClaimTemplate:
+              spec:
+                storageClassName: manual
+                volumeName: alertmanager-pv
+                accessModes: ["ReadWriteOnce"]
+                resources:
+                  requests:
+                  storage: 10Mi
 
       # Disable Etcd metrics
       kubeEtcd.enabled: false
