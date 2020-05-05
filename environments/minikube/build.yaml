@@ -16486,7 +16486,7 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: prometheus
+  name: read-namespace
   namespace: java-demo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -16603,7 +16603,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: namespace-read-role
+  name: read-namespace-cluster-role
 rules:
 - apiGroups:
   - ""
@@ -16685,15 +16685,15 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: namespace-read-rolebinding
+  name: read-namespace-rolebinding
   namespace: java-demo
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: namespace-read-role
+  kind: ClusterRole
+  name: read-namespace-cluster-role
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: read-namespace
   namespace: java-demo
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -16738,19 +16738,6 @@ subjects:
 - kind: ServiceAccount
   name: helm-operator
   namespace: flux-system
----
-apiVersion: rbac.authorization.k8s.io/v1beta1
-kind: ClusterRoleBinding
-metadata:
-  name: prometheus
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: prometheus
-subjects:
-- kind: ServiceAccount
-  name: prometheus
-  namespace: java-demo
 ---
 apiVersion: v1
 data:
@@ -16836,22 +16823,6 @@ spec:
   selector:
     app: java-demo
     role: database
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: prometheus
-  namespace: java-demo
-spec:
-  ports:
-  - name: web
-    nodePort: 30900
-    port: 9090
-    protocol: TCP
-    targetPort: web
-  selector:
-    prometheus: prometheus
-  type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -17100,7 +17071,7 @@ spec:
             port: container-port
           initialDelaySeconds: 60
           periodSeconds: 20
-      serviceAccountName: default
+      serviceAccountName: read-namespace
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -17219,39 +17190,6 @@ spec:
             cpu: 50m
             memory: 300Mi
   profile: default
----
-apiVersion: monitoring.coreos.com/v1
-kind: Prometheus
-metadata:
-  name: prometheus
-  namespace: java-demo
-spec:
-  resources:
-    requests:
-      memory: 100Mi
-  serviceAccountName: prometheus
-  serviceMonitorSelector:
-    matchLabels:
-      team: java-demo
----
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  labels:
-    team: java-demo
-  name: java-demo-backend-service-monitor
-  namespace: java-demo
-spec:
-  endpoints:
-  - interval: 10s
-    path: /actuator/prometheus
-    targetPort: 8080
-  namespaceSelector:
-    matchNames:
-    - java-demo
-  selector:
-    matchLabels:
-      team: java-demo
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
