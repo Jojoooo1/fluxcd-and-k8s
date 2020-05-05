@@ -21,6 +21,7 @@ patchesStrategicMerge:
 
 resources:
   - java-demo/namespace.yaml
+  - java-demo/rbac/read-namespace-service-account.yaml
   - java-demo/rbac/read-namespace-role-binding.yaml
   
   - java-demo/database/pv.yaml

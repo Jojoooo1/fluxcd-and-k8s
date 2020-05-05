@@ -5,14 +5,13 @@ metadata:
   name: read-namespace-rolebinding
   namespace: java-demo
 
-# Target (User, Account, Group [...])
+# Target
 subjects:
   - kind: ServiceAccount
     name: read-namespace
-    # namespace scoped by metadata.namespace
-    namespace: default # default
+    namespace: java-demo
 
-# The Role
+# Role
 roleRef:
   kind: ClusterRole
   name: read-namespace-cluster-role

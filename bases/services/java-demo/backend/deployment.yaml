@@ -23,7 +23,8 @@ spec:
         role: backend
         
     spec:
-      serviceAccountName: read-namespace # d. Sets specific RBAC to the pod
+      # d. Sets specific RBAC
+      serviceAccountName: read-namespace
       # restartPolicy: Always # d.
       containers:
         - name: java-demo-backend
