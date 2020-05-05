@@ -20,18 +20,18 @@ spec:
       ## Deployed Prometheus instance Spec ##
       prometheus:
         prometheusSpec:
-          retention: "14d"
+          retention: "10d"
           resources: {} # limit
-          #  storageSpec:
-          volumeClaimTemplate:
-            metadata:
-              name: prometheus-pvc
-              namespace: monitoring-system
-            spec:
-              volumeName: prometheus-pv
-              accessModes: ["ReadWriteOnce"]
-              requests:
-                storage: 10Mi
+          storageSpec:
+            volumeClaimTemplate:
+              metadata:
+                name: prometheus-pvc
+                namespace: monitoring-system
+              spec:
+                volumeName: prometheus-pv
+                accessModes: ["ReadWriteOnce"]
+                requests:
+                  storage: 10Mi
       
       ## Deployed Grafana instance Spec ##
       grafana:
@@ -47,16 +47,16 @@ spec:
         alertmanagerSpec:
           retention: "120h"
           resources: {} # limit
-          #  storageSpec:
-          volumeClaimTemplate:
-            metadata:
-              name: alertmanager-pvc
-              namespace: monitoring-system
-            spec:
-              volumeName: alertmanager-pv
-              accessModes: ["ReadWriteOnce"]
-              requests:
-                storage: 10Mi
+          storage:
+            volumeClaimTemplate:
+              metadata:
+                name: alertmanager-pvc
+                namespace: monitoring-system
+              spec:
+                volumeName: alertmanager-pv
+                accessModes: ["ReadWriteOnce"]
+                requests:
+                  storage: 10Mi
 
       # Disable Etcd metrics
       kubeEtcd.enabled: false
