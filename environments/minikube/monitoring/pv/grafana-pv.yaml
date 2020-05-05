@@ -3,10 +3,16 @@ kind: PersistentVolume
 metadata:
   name: grafana-pv
   labels:
-    type: local
+    app: prometheus-operator-grafana
 
 spec:
-  storageClassName: manual
+  # storageClassName: standard
+  
+  # Specifying a claimRef in a PV does not prevent the specified PVC from being bound to a different PV
+  claimRef:
+    name: grafana-pvc
+    # namespace:
+    
   capacity:
     storage: 10Mi
   accessModes:
@@ -14,3 +20,14 @@ spec:
 
   hostPath:
     path: "/mnt/data"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: grafana-pvc
+spec:
+  # Specifying a volumeName in your PVC does not prevent a different PVC from binding to the specified PV before 
+  volumeName: grafana-pv
+
+# INFO: To ensure claim gets bound to the volume must ensure that both volumeName and claimRef are specified. 

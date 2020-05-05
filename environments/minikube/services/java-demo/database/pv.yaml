@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql-pv-volume
-  labels:
-    type: local
+  name: mysql-pv
 
 spec:
-  storageClassName: manual
+  # Two way binding
+  claimRef:
+    name: mysql-pvc
+
   capacity:
     storage: 50Mi
   accessModes:
@@ -20,13 +21,8 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql-pv-claim
+  name: mysql-pvc
 
 spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-
-  resources:
-    requests:
-      storage: 50Mi
+  # Two way binding
+  volumeName: mysql-pv

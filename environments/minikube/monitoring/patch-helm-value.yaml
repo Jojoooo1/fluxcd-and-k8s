@@ -11,30 +11,30 @@ spec:
   chart:
     values:
       # https://github.com/helm/charts/tree/master/stable/prometheus-operator#configuration
-      # fullnameOverride: prometheus
-
+      fullnameOverride: prometheus
+      
+      ## Deployed PrometheusOperator instance Spec ##
       # CRD are created through kustomize (helm does not handle well CRD creation)
       prometheusOperator.createCustomResource: false
 
-      # allows Prometheus operator to watch serviceMonitors outside of his namespace.
-      prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
+      ## Deployed Prometheus instance Spec ##
+      prometheus.prometheusSpec.retention: "14d"
+      prometheus.prometheusSpec.resources: {} # limit
 
-      # Define persistent storage for Prometheus (PVC)
+      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.metadata.name: prometheus-pvc
       prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.volumeName: prometheus-pv
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes: ["ReadWriteOnce"]
-      prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage: 10mi
 
-      # Define persistent storage for Grafana (PVC)
-      grafana.adminPassword: password
+      ## Deployed Grafana instance Spec ##
       grafana.persistence.enabled: true
-      grafana.persistence.storageClassName: grafana-pv
-      grafana.persistence.accessModes:  ["ReadWriteOnce"]
-      grafana.persistence.size: 10mi
+      grafana.persistence.type: pvc
+      grafana.persistence.existingClaim: grafana-pvc
+      grafana.adminPassword: password
 
-      # Define persistent storage for Alertmanager (PVC)
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.accessModes: ["ReadWriteOnce"]
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.storageClassName: alertmanager-pv
-      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.resources.requests.storage: 10mi
+
+      ## Deployed AlertManager instance Spec ##
+      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.metadata.name: alertmanager-pvc
+      alertmanager.alertmanagerSpec.storage.volumeClaimTemplate.spec.volumeName: alertmanager-pv
+      alertmanager.alertmanagerSpec.retention: 120h
 
       # Disable Etcd metrics
       kubeEtcd.enabled: false

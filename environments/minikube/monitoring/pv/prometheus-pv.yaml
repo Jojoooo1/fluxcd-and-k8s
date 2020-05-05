@@ -3,10 +3,14 @@ kind: PersistentVolume
 metadata:
   name: prometheus-pv
   labels:
-    type: local
+    app: prometheus-operator-prometheus
 
 spec:
-  storageClassName: manual
+  # storageClassName: standard
+  # Two way binding
+  claimRef:
+    name: prometheus-pvc
+
   capacity:
     storage: 10Mi
   accessModes:
