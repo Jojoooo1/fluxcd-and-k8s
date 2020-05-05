@@ -8,75 +8,71 @@ metadata:
     fluxcd.io/automated: "false" # do not update automatically to prevent damaging the system
 
 spec:
-  chart:
-    values:
-      # https://github.com/helm/charts/tree/master/stable/prometheus-operator#configuration
-      # CRD are created through kustomize (helm does not handle well CRD creation)
-      prometheusOperator.createCustomResource: false
-      # allows Prometheus operator to watch serviceMonitors outside of his namespace.
-      prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
+  values:
+    # https://github.com/helm/charts/tree/master/stable/prometheus-operator#configuration
+    # CRD are created through kustomize (helm does not handle well CRD creation)
+    prometheusOperator.createCustomResource: false
+    # allows Prometheus operator to watch serviceMonitors outside of his namespace.
+    prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
 
-      ## Deployed Prometheus instance Spec ##
-      prometheus:
-        prometheusSpec:
-          retention: "15d"
-          resources: {} # limit
-          # not working chart seems to be still buggy
-          # storageSpec:
-          #   volumeClaimTemplate:
-          #     spec:
-          #       storageClassName: manual
-          #       volumeName: prometheus-pv
-          #       accessModes: ["ReadWriteOnce"]
-          #       resources:
-          #         requests:
-          #         storage: 10Mi
-          storageSpec:
-            volumeClaimTemplate:
-              spec:
-                volumeName: prometheus-prometheus-operator-prometheus-0
-                accessModes: ["ReadWriteOnce"]
-                storageClassName: manual
-                resources:
-                  requests:
-                    storage: 50Mi
+    ## Deployed Prometheus instance Spec ##
+    prometheus:
+      prometheusSpec:
+        retention: "15d"
+        resources: {} # limit
+        # not working chart seems to be still buggy
+        # storageSpec:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: manual
+        #       volumeName: prometheus-pv
+        #       accessModes: ["ReadWriteOnce"]
+        #       resources:
+        #         requests:
+        #         storage: 10Mi
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              volumeName: prometheus-prometheus-operator-prometheus-0
+              accessModes: ["ReadWriteOnce"]
+              storageClassName: manual
+              resources:
+                requests:
+                  storage: 50Mi
 
-      
-      ## Deployed Grafana instance Spec ##
-      grafana:
-        adminPassword: password
-        persistence:
-          enabled: true
-          type: pvc
-          existingClaim: grafana-pvc
-
-
-      ## Deployed AlertManager instance Spec ##
-      alertmanager:
-        alertmanagerSpec:
-          retention: "120h"
-          resources: {} # limit
-          # not working chart seems to be still buggy
-          storage:
-            volumeClaimTemplate:
-              spec:
-                storageClassName: manual
-                volumeName: alertmanager-pv
-                selector:
-                  matchLabels:
-                    app: alertmanager-pv
-                  
-                accessModes: ["ReadWriteOnce"]
-                resources:
-                  requests:
-                    storage: 10Mi
-
-      # Disable Etcd metrics
-      kubeEtcd.enabled: false
-      # Disable Controller metrics
-      kubeControllerManager.enabled: false
-      # Disable Scheduler metrics
-      kubeScheduler.enabled: false
+    
+    ## Deployed Grafana instance Spec ##
+    grafana:
+      adminPassword: password
+      persistence:
+        enabled: true
+        type: pvc
+        existingClaim: grafana-pvc
 
 
+    ## Deployed AlertManager instance Spec ##
+    alertmanager:
+      alertmanagerSpec:
+        retention: "120h"
+        resources: {} # limit
+        # not working chart seems to be still buggy
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: manual
+              volumeName: alertmanager-pv
+              selector:
+                matchLabels:
+                  app: alertmanager-pv
+                
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 10Mi
 
+    # Disable Etcd metrics
+    kubeEtcd.enabled: false
+    # Disable Controller metrics
+    kubeControllerManager.enabled: false
+    # Disable Scheduler metrics
+    kubeScheduler.enabled: false

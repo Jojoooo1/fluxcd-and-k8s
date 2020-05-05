@@ -41,6 +41,7 @@ spec:
 #       storage: 40Mi
 #   storageClassName: manual
 #   volumeName: pvc-prometheus-operator-prometheus-0
+# ---
 # apiVersion: v1
 # kind: PersistentVolume
 # metadata:
