@@ -7,7 +7,7 @@ spec:
   # storageClassName: standard
   # Two way binding
   claimRef:
-    name: grafana-pvc
+    name: alertmanager-pvc
     namespace: monitoring-system # needed => kustomize does not add it
   
   capacity:
