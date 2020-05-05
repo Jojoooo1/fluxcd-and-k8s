@@ -16880,7 +16880,7 @@ spec:
         - --ssh-keygen-dir=/var/fluxd/keygen
         - --git-path=environments/minikube
         - --git-branch=master
-        - --git-url=git@github.com:jojoooo1/java-demo-flux
+        - --git-url=git@github.com:jojoooo1/fluxcd-and-k8s
         - --git-label=flux-sync
         - --git-user=Flux
         - --git-email=chevalier.jonathan@live.fr
@@ -17142,12 +17142,12 @@ spec:
         - containerPort: 3306
         volumeMounts:
         - mountPath: /var/lib/mysql
-          name: mysql-persistent-storage
+          name: mysql-pv
       serviceAccountName: default
       volumes:
-      - name: mysql-persistent-storage
+      - name: mysql-pv
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: mysql-pvc
 ---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
