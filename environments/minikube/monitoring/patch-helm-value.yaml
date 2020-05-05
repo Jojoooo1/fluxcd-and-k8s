@@ -32,6 +32,15 @@ spec:
           #       resources:
           #         requests:
           #         storage: 10Mi
+          storageSpec:
+            volumeClaimTemplate:
+              spec:
+                volumeName: pvc-prometheus-prometheus-operator-prometheus-0
+                accessModes: ["ReadWriteOnce"]
+                storageClassName: manual
+                resources:
+                  requests:
+                    storage: 50Mi
 
       
       ## Deployed Grafana instance Spec ##

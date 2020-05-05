@@ -1,34 +1,46 @@
-
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pvc-prometheus-operator-prometheus-0
+  name: pvc-prometheus-prometheus-operator-prometheus-0
 spec:
+  storageClassName: manual
   accessModes:
-  - ReadWriteOnce
+    - ReadWriteOnce
   capacity:
-    storage: 40Mi
-  storageClassName: manual
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: prometheus
-    prometheus: prometheus-operator-prometheus
-  name: prometheus-prometheus-operator-prometheus-db-prometheus-prometheus-operator-prometheus-0
-  namespace: monitoring-system
+    storage: 50Mi
+  hostPath:
+    path: "/mnt/data"
 
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 40Mi
-  storageClassName: manual
-  volumeName: pvc-prometheus-operator-prometheus-0
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: pvc-prometheus-operator-prometheus-0
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   capacity:
+#     storage: 40Mi
+#   storageClassName: manual
+#   hostPath:
+#     path: "/mnt/data"
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: prometheus-prometheus-operator-prometheus-db-prometheus-prometheus-operator-prometheus-0
+#   namespace: monitoring-system
+#   labels:
+#     app: prometheus
+#     prometheus: prometheus-operator-prometheus
 
-
+# spec:
+#   accessModes:
+#     - ReadWriteOnce
+#   resources:
+#     requests:
+#       storage: 40Mi
+#   storageClassName: manual
+#   volumeName: pvc-prometheus-operator-prometheus-0
 # apiVersion: v1
 # kind: PersistentVolume
 # metadata:
