@@ -26,3 +26,8 @@ metadata:
 spec:
   # Two way binding
   volumeName: mysql-pv
+  resources:
+    requests:
+      storage: 50Mi
+  accessModes:
+    - ReadWriteOnce

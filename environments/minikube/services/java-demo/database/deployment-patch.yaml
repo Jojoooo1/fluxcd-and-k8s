@@ -9,6 +9,12 @@ metadata:
 spec:
   template:
     spec:
+      containers:
+        - name: java-demo-database
+          volumeMounts:
+            - name: mysql-pv
+              mountPath: /var/lib/mysql
+
       volumes:
       - name: mysql-pv
         persistentVolumeClaim:

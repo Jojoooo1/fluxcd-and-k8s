@@ -29,5 +29,10 @@ metadata:
 spec:
   # Specifying a volumeName in your PVC does not prevent a different PVC from binding to the specified PV before 
   volumeName: grafana-pv
+  resources:
+    requests:
+      storage: 10Mi
+  accessModes:
+    - ReadWriteOnce
 
 # INFO: To ensure claim gets bound to the volume must ensure that both volumeName and claimRef are specified. 
