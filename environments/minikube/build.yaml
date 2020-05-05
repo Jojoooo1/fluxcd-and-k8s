@@ -17136,16 +17136,17 @@ spec:
         alertmanagerSpec:
           resources: {}
           retention: 120h
-          volumeClaimTemplate:
-            metadata:
-              name: alertmanager-pvc
-              namespace: monitoring-system
-            spec:
-              accessModes:
-              - ReadWriteOnce
-              requests:
-                storage: 10Mi
-              volumeName: alertmanager-pv
+          storage:
+            volumeClaimTemplate:
+              metadata:
+                name: alertmanager-pvc
+                namespace: monitoring-system
+              spec:
+                accessModes:
+                - ReadWriteOnce
+                requests:
+                  storage: 10Mi
+                volumeName: alertmanager-pv
       grafana:
         adminPassword: password
         persistence:
@@ -17158,17 +17159,18 @@ spec:
       prometheus:
         prometheusSpec:
           resources: {}
-          retention: 14d
-          volumeClaimTemplate:
-            metadata:
-              name: prometheus-pvc
-              namespace: monitoring-system
-            spec:
-              accessModes:
-              - ReadWriteOnce
-              requests:
-                storage: 10Mi
-              volumeName: prometheus-pv
+          retention: 10d
+          storageSpec:
+            volumeClaimTemplate:
+              metadata:
+                name: prometheus-pvc
+                namespace: monitoring-system
+              spec:
+                accessModes:
+                - ReadWriteOnce
+                requests:
+                  storage: 10Mi
+                volumeName: prometheus-pv
       prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
       prometheusOperator:
         createCustomResource: false
