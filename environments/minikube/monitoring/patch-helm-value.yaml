@@ -34,7 +34,7 @@ spec:
           storageSpec:
             volumeClaimTemplate:
               spec:
-                volumeName: pvc-prometheus-operator-prometheus-0
+                volumeName: prometheus-prometheus-operator-prometheus-0
                 accessModes: ["ReadWriteOnce"]
                 storageClassName: manual
                 resources:
