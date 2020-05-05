@@ -54,6 +54,10 @@ spec:
               spec:
                 storageClassName: manual
                 volumeName: alertmanager-pv
+                selector:
+                  matchLabels:
+                    app: alertmanager-pv
+                  
                 accessModes: ["ReadWriteOnce"]
                 resources:
                   requests:
