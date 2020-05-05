@@ -1,15 +1,15 @@
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: pvc-prometheus-prometheus-operator-prometheus-0
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  capacity:
-    storage: 50Mi
-  hostPath:
-    path: "/mnt/data"
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: pvc-prometheus-prometheus-operator-prometheus-0
+# spec:
+#   storageClassName: manual
+#   accessModes:
+#     - ReadWriteOnce
+#   capacity:
+#     storage: 50Mi
+#   hostPath:
+#     path: "/mnt/data"
 
 # apiVersion: v1
 # kind: PersistentVolume
@@ -42,22 +42,22 @@ spec:
 #   storageClassName: manual
 #   volumeName: pvc-prometheus-operator-prometheus-0
 # ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: prometheus-pv
-# spec:
-#   # storageClassName: standard
-#   # Two way binding
-#   # claimRef:
-#   #   name: prometheus-pvc
-#   #   # needed => kustomize does not add it
-#   #   namespace: monitoring-system
-#   storageClassName: manual
-#   capacity:
-#     storage: 10Mi
-#   accessModes:
-#     - ReadWriteOnce
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: prometheus-pv
+spec:
+  # storageClassName: standard
+  # Two way binding
+  # claimRef:
+  #   name: prometheus-pvc
+  #   # needed => kustomize does not add it
+  #   namespace: monitoring-system
+  storageClassName: manual
+  capacity:
+    storage: 10Mi
+  accessModes:
+    - ReadWriteOnce
 
-#   hostPath:
-#     path: "/mnt/data"
+  hostPath:
+    path: "/mnt/data"

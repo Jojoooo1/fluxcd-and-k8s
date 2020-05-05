@@ -21,24 +21,24 @@ spec:
         retention: "15d"
         resources: {} # limit
         # not working chart seems to be still buggy
-        # storageSpec:
-        #   volumeClaimTemplate:
-        #     spec:
-        #       storageClassName: manual
-        #       volumeName: prometheus-pv
-        #       accessModes: ["ReadWriteOnce"]
-        #       resources:
-        #         requests:
-        #         storage: 10Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
-              volumeName: prometheus-prometheus-operator-prometheus-0
-              accessModes: ["ReadWriteOnce"]
               storageClassName: manual
+              volumeName: prometheus-pv
+              accessModes: ["ReadWriteOnce"]
               resources:
                 requests:
-                  storage: 50Mi
+                storage: 10Mi
+        # storageSpec:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       volumeName: prometheus-prometheus-operator-prometheus-0
+        #       accessModes: ["ReadWriteOnce"]
+        #       storageClassName: manual
+        #       resources:
+        #         requests:
+        #           storage: 50Mi
 
     
     ## Deployed Grafana instance Spec ##
