@@ -11,7 +11,7 @@ spec:
   chart:
     values:
       # https://github.com/helm/charts/tree/master/stable/prometheus-operator#configuration
-      # fullnameOverride: prometheus
+      fullnameOverride:
       # CRD are created through kustomize (helm does not handle well CRD creation)
       prometheusOperator.createCustomResource: false
       # allows Prometheus operator to watch serviceMonitors outside of his namespace.
