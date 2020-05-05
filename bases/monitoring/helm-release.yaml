@@ -2,21 +2,14 @@
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
-  name: prometheus
+  name: prometheus-operator
   namespace: monitoring-system
   # annotations:
   #   fluxcd.io/ignore: "true"
 
 spec:
-  releaseName: prometheus
+  releaseName: prometheus-operator
   chart:
     repository: https://kubernetes-charts.storage.googleapis.com/
     name: prometheus-operator
     version: 8.13.2
-    values:
-      # https://github.com/helm/charts/tree/master/stable/prometheus-operator#configuration
-      # fullnameOverride: prometheus
-      # CRD are created through kustomize (helm does not handle well CRD creation)
-      prometheusOperator.createCustomResource: false
-      # allows Prometheus operator to watch serviceMonitors outside of his namespace.
-      prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false

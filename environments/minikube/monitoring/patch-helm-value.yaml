@@ -11,27 +11,28 @@ spec:
   chart:
     values:
       # https://github.com/helm/charts/tree/master/stable/prometheus-operator#configuration
-      
-      ## Deployed PrometheusOperator instance Spec ##
+      fullnameOverride: prometheus
       # CRD are created through kustomize (helm does not handle well CRD creation)
-      prometheusOperator:
-        createCustomResource: false
+      prometheusOperator.createCustomResource: false
+      # allows Prometheus operator to watch serviceMonitors outside of his namespace.
+      prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
 
       ## Deployed Prometheus instance Spec ##
       prometheus:
         prometheusSpec:
-          retention: "10d"
+          retention: "15d"
           resources: {} # limit
-          storageSpec:
-            volumeClaimTemplate:
-              metadata:
-                name: prometheus-pvc
-                namespace: monitoring-system
-              spec:
-                volumeName: prometheus-pv
-                accessModes: ["ReadWriteOnce"]
-                requests:
-                  storage: 10Mi
+          # not working chart seems to be still buggy
+          # storageSpec:
+          #   volumeClaimTemplate:
+          #     spec:
+          #       storageClassName: manual
+          #       volumeName: prometheus-pv
+          #       accessModes: ["ReadWriteOnce"]
+          #       resources:
+          #         requests:
+          #         storage: 10Mi
+
       
       ## Deployed Grafana instance Spec ##
       grafana:
@@ -47,16 +48,16 @@ spec:
         alertmanagerSpec:
           retention: "120h"
           resources: {} # limit
-          storage:
-            volumeClaimTemplate:
-              metadata:
-                name: alertmanager-pvc
-                namespace: monitoring-system
-              spec:
-                volumeName: alertmanager-pv
-                accessModes: ["ReadWriteOnce"]
-                requests:
-                  storage: 10Mi
+          # not working chart seems to be still buggy
+          # storage:
+          #   volumeClaimTemplate:
+          #     spec:
+          #       storageClassName: manual
+          #       volumeName: alertmanager-pv
+          #       accessModes: ["ReadWriteOnce"]
+          #       resources:
+          #         requests:
+          #         storage: 10Mi
 
       # Disable Etcd metrics
       kubeEtcd.enabled: false

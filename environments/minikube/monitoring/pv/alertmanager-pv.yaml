@@ -6,11 +6,11 @@ metadata:
 spec:
   # storageClassName: standard
   # Two way binding
-  claimRef:
-    name: alertmanager-pvc
-    # needed => kustomize does not add it
-    namespace: monitoring-system
-  
+  # claimRef:
+  #   name: alertmanager-pvc
+  #   # needed => kustomize does not add it
+  #   namespace: monitoring-system
+  storageClassName: manual
   capacity:
     storage: 10Mi
   accessModes:
