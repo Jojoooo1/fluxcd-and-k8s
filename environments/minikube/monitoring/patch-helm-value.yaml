@@ -35,7 +35,7 @@ spec:
           storageSpec:
             volumeClaimTemplate:
               spec:
-                volumeName: pvc-prometheus-prometheus-operator-prometheus-0
+                volumeName: pvc-prometheus-operator-prometheus-0
                 accessModes: ["ReadWriteOnce"]
                 storageClassName: manual
                 resources:
@@ -70,7 +70,7 @@ spec:
                 accessModes: ["ReadWriteOnce"]
                 resources:
                   requests:
-                  storage: 10Mi
+                    storage: 10Mi
 
       # Disable Etcd metrics
       kubeEtcd.enabled: false
