@@ -2,7 +2,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: istio-system # needed because create istio ressources (first in start script) that uses a namespace 
-
 resources:
   - istio-operator.yaml
+  # - istio-mtls-strict.yaml
