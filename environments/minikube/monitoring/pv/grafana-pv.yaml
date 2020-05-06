@@ -1,22 +1,19 @@
+# INFO: To ensure two wy binding must ensure that both 1. *volumeName* and 2. *claimRef* are specified.
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: grafana-pv
 
 spec:
-  # storageClassName: standard
-  
-  # Specifying a claimRef in a PV does not prevent the specified PVC from being bound to a different PV
   claimRef:
     name: grafana-pvc
-    # needed => kustomize does not add it
-    namespace: monitoring-system
+    namespace: monitoring-system # needed => kustomize.namespace does not add it
     
   capacity:
     storage: 10Mi
   accessModes:
     - ReadWriteOnce
-
   hostPath:
     path: "/mnt/data"
 
@@ -28,12 +25,9 @@ metadata:
   namespace: monitoring-system
   
 spec:
-  # Specifying a volumeName in your PVC does not prevent a different PVC from binding to the specified PV before 
   volumeName: grafana-pv
   resources:
     requests:
       storage: 10Mi
   accessModes:
     - ReadWriteOnce
-
-# INFO: To ensure claim gets bound to the volume must ensure that both volumeName and claimRef are specified. 

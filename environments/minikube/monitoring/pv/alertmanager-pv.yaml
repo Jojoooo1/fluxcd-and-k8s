@@ -1,3 +1,5 @@
+# INFO: To ensure two wy binding must ensure that both 1. *volumeName* and 2. *claimRef* are specified.
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -5,17 +7,12 @@ metadata:
   labels:
     app: alertmanager-pv
 spec:
-  # storageClassName: standard
-  # Two way binding
   # claimRef:
   #   name: alertmanager-pvc
-  #   # needed => kustomize does not add it
-  #   namespace: monitoring-system
-  storageClassName: manual
+  #   namespace: monitoring-system # needed => kustomize does not add it
   capacity:
     storage: 10Mi
   accessModes:
     - ReadWriteOnce
-
   hostPath:
     path: "/mnt/data"

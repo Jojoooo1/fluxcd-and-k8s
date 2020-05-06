@@ -1,47 +1,5 @@
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: pvc-prometheus-prometheus-operator-prometheus-0
-# spec:
-#   storageClassName: manual
-#   accessModes:
-#     - ReadWriteOnce
-#   capacity:
-#     storage: 50Mi
-#   hostPath:
-#     path: "/mnt/data"
-
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: pvc-prometheus-operator-prometheus-0
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   capacity:
-#     storage: 40Mi
-#   storageClassName: manual
-#   hostPath:
-#     path: "/mnt/data"
-# ---
-# apiVersion: v1
-# kind: PersistentVolumeClaim
-# metadata:
-#   name: prometheus-prometheus-operator-prometheus-db-prometheus-prometheus-operator-prometheus-0
-#   namespace: monitoring-system
-#   labels:
-#     app: prometheus
-#     prometheus: prometheus-operator-prometheus
-
-# spec:
-#   accessModes:
-#     - ReadWriteOnce
-#   resources:
-#     requests:
-#       storage: 40Mi
-#   storageClassName: manual
-#   volumeName: pvc-prometheus-operator-prometheus-0
-# ---
+# INFO: To ensure two wy binding must ensure that both 1. *volumeName* and 2. *claimRef* are specified.
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -49,17 +7,13 @@ metadata:
   labels:
     app: prometheus-pv
 spec:
-  # storageClassName: standard
-  # Two way binding
   # claimRef:
   #   name: prometheus-pvc
-  #   # needed => kustomize does not add it
-  #   namespace: monitoring-system
-  storageClassName: manual
+  #   namespace: monitoring-system # needed => kustomize does not add it
+  
   capacity:
     storage: 10Mi
   accessModes:
     - ReadWriteOnce
-
   hostPath:
     path: "/mnt/data"

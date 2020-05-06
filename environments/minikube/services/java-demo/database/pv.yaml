@@ -7,7 +7,8 @@ spec:
   # Two way binding
   claimRef:
     name: mysql-pvc
-    namespace: java-demo # needed => kustomize does not add it
+    # bug: kustomize does not template claimRef
+    namespace: java-demo
 
   capacity:
     storage: 50Mi
@@ -23,7 +24,6 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
-  namespace: java-demo
   
 spec:
   # Two way binding

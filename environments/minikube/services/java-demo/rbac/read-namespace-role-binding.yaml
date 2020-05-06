@@ -3,13 +3,13 @@ kind: RoleBinding
 
 metadata:
   name: read-namespace-rolebinding
-  namespace: java-demo
+  # namespace is set by kustomize
 
 # Target
 subjects:
   - kind: ServiceAccount
     name: read-namespace
-    namespace: java-demo
+    # namespace is set by kustomize
 
 # Role
 roleRef:
