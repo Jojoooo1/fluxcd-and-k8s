@@ -11,7 +11,6 @@ spec:
   #   name: prometheus-pvc
   # # bug: kustomize does not template claimRef
   #   namespace: monitoring-system
-  
   capacity:
     storage: 10Mi
   accessModes:
