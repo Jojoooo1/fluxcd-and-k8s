@@ -4,6 +4,7 @@ kind: ConfigMap
 
 metadata:
   name: carros
+  # namespace set in corresponding env folder via kustomize
 
 data:
   application.yml: |-

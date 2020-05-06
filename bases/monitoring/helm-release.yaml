@@ -3,9 +3,11 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: prometheus-operator
-  namespace: monitoring-system
-  # annotations:
-  #   fluxcd.io/ignore: "true"
+  # namespace: not set for being able to programmatically sets it trough kustomize in env folder
+  # (to use a patch file for this release in env folder it needs to use the namespace not good because we dont want to know it in advance)
+
+  annotations:
+      fluxcd.io/automated: "false"
 
 spec:
   releaseName: prometheus-operator

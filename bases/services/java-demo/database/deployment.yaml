@@ -4,6 +4,8 @@ kind: Deployment
 
 metadata:
   name: java-demo-database-deployment
+  # namespace set in corresponding env folder via kustomize
+  
   labels:
     app: java-demo # will be used by kialis
     # version: can be use by kialis

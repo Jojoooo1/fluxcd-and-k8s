@@ -2,4 +2,4 @@ apiVersion: v1
 kind: Namespace
 
 metadata:
-  name: flux-system # default flux
+  name: flux # default flux

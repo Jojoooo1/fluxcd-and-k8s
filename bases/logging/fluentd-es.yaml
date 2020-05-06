@@ -6,7 +6,7 @@ metadata:
   name: fluentd-elasticsearch
   namespace: fluxcd
   annotations:
-    fluxcd.io/ignore: "false"
+    fluxcd.io/automated: "false"
 spec:
   releaseName: fluentd-elasticsearch
   chart:
