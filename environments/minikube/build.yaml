@@ -17131,41 +17131,50 @@ spec:
   chart:
     name: prometheus-operator
     repository: https://kubernetes-charts.storage.googleapis.com/
-    values:
-      alertmanager:
-        alertmanagerSpec:
-          resources: {}
-          retention: 120h
-          storage:
-            volumeClaimTemplate:
-              spec:
-                accessModes:
-                - ReadWriteOnce
-                resources:
-                  storage: 10Mi
-                selector:
-                  matchLabels:
-                    app: alertmanager-pv
-                storageClassName: manual
-                volumeName: alertmanager-pv
-      fullnameOverride: prometheus
-      grafana:
-        adminPassword: password
-        persistence:
-          enabled: true
-          existingClaim: grafana-pvc
-          type: pvc
-      kubeControllerManager.enabled: false
-      kubeEtcd.enabled: false
-      kubeScheduler.enabled: false
-      prometheus:
-        prometheusSpec:
-          resources: {}
-          retention: 15d
-      prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
-      prometheusOperator.createCustomResource: false
-    version: 8.13.2
+    version: 8.13.7
   releaseName: prometheus-operator
+  values:
+    alertmanager:
+      alertmanagerSpec:
+        resources: {}
+        retention: 120h
+        storage:
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Mi
+              selector:
+                matchLabels:
+                  app: alertmanager-pv
+    grafana:
+      adminPassword: password
+      persistence:
+        enabled: true
+        existingClaim: grafana-pvc
+        type: pvc
+    kubeControllerManager.enabled: false
+    kubeEtcd.enabled: false
+    kubeScheduler.enabled: false
+    prometheus:
+      prometheusSpec:
+        resources: {}
+        retention: 15d
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 10Mi
+              selector:
+                matchLabels:
+                  app: prometheus-pv
+    prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
+    prometheusOperator.createCustomResource: false
 ---
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
@@ -17262,12 +17271,16 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pvc-prometheus-operator-prometheus-0
+  labels:
+    app: prometheus-pv
+  name: prometheus-pv
 spec:
   accessModes:
   - ReadWriteOnce
   capacity:
-    storage: 40Mi
+    storage: 10Mi
+  hostPath:
+    path: /mnt/data
   storageClassName: manual
 ---
 apiVersion: v1
@@ -17295,20 +17308,3 @@ spec:
     requests:
       storage: 10Mi
   volumeName: grafana-pv
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  labels:
-    app: prometheus
-    prometheus: prometheus-operator-prometheus
-  name: prometheus-prometheus-operator-prometheus-db-prometheus-prometheus-operator-prometheus-0
-  namespace: monitoring-system
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 40Mi
-  storageClassName: manual
-  volumeName: pvc-prometheus-operator-prometheus-0
