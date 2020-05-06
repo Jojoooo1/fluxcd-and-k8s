@@ -28,10 +28,10 @@ spec:
     ## Deployed Prometheus instance Spec ##
     prometheus:
       prometheusSpec:
-        securityContext:
-          runAsNonRoot: false
-          runAsUser: 0
-          fsGroup: 0
+        # securityContext:
+        #   runAsNonRoot: false
+        #   runAsUser: 0
+        #   fsGroup: 0
         # allows Prometheus operator to watch serviceMonitors outside of his namespace.
         serviceMonitorSelectorNilUsesHelmValues: false
         retention: "15d"
