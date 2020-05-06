@@ -20,18 +20,18 @@ spec:
       # CRD are created through kustomize (helm does not handle well CRD creation)
       createCustomResource: false
       # Bug caused by PV (https://github.com/coreos/prometheus-operator/issues/2182 & https://github.com/helm/charts/issues/21501 [...])
-      securityContext:
-        runAsNonRoot: false
-        runAsUser: 0
-        fsGroup: 0
+      # securityContext:
+      #   runAsNonRoot: false
+      #   runAsUser: 0
+      #   fsGroup: 0
 
     ## Deployed Prometheus instance Spec ##
     prometheus:
       prometheusSpec:
-        # securityContext:
-        #   runAsNonRoot: false
-        #   runAsUser: 0
-        #   fsGroup: 0
+        securityContext:
+          runAsNonRoot: false
+          runAsUser: 0
+          fsGroup: 0
         # allows Prometheus operator to watch serviceMonitors outside of his namespace.
         serviceMonitorSelectorNilUsesHelmValues: false
         retention: "15d"
