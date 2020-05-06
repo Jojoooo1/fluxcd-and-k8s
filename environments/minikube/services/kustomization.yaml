@@ -26,6 +26,8 @@ resources:
   
   - java-demo/database/pv.yaml
   - java-demo/backend/service-monitor-prom.yaml
+
+  - istio-services/java-demo-backend.yaml
   
   # - prometheus/prometheus.yaml
   # - prometheus/cluster-role-binding.yaml

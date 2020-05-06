@@ -6,10 +6,12 @@ metadata:
   name: alertmanager-pv
   labels:
     app: alertmanager-pv
+
 spec:
   # claimRef:
   #   name: alertmanager-pvc
-  #   namespace: monitoring-system # needed => kustomize does not add it
+  # # bug: kustomize does not template claimRef
+  #   namespace: monitoring-system
   capacity:
     storage: 10Mi
   accessModes:
