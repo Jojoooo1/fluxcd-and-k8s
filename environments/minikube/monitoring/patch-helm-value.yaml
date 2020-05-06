@@ -28,7 +28,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              volumeName: prometheus-pv
+              storageClassName: manual # mandatory
               selector:
                 matchLabels:
                   app: prometheus-pv
@@ -45,7 +45,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: manual
+              storageClassName: manual # mandatory
               selector:
                 matchLabels:
                   app: alertmanager-pv
