@@ -2,15 +2,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 # Scope all the ressource to namespace
-namespace: java-demo
+namespace: staging
+# Warning: kustomize do not template pv.claimRef.namespace
 
-# BE BECAREFULL IF CREATED CAN NOT CHANGE IT
-# => From apps/v1 on, a Deployment’s label selector is immutable after it gets created. (can fucked up your deployment)
-# commonLabels => Set labels on all Resources and Selectors.
-# selector:
-#     matchLabels:
-#       app: foo # Selector was changed
-#       environment: test # Selector was added
+# Warning: 
+# => From apps/v1 Deployment’s label selector is immutable after it gets created. 
+# => commonLabels => Set labels on all Resources and Selectors. (can fucked up your deployment because of label selector)
 
 bases:
   - ../../../bases/services/java-demo

@@ -12,7 +12,7 @@ spec:
   #   name: alertmanager-pvc
   # # bug: kustomize does not template claimRef
   #   namespace: monitoring-system
-  storageClassName: manual
+  storageClassName: standard
   capacity:
     storage: 10Mi
   accessModes:
