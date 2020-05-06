@@ -6,12 +6,14 @@ metadata:
   name: prometheus-pv
   labels:
     app: prometheus-pv
+    
 spec:
   # claimRef:
   #   name: prometheus-pvc
   # # bug: kustomize does not template claimRef
   #   namespace: monitoring-system
-  # storageClassName: standard
+  
+  storageClassName: standard # mandatory
   capacity:
     storage: 10Mi
   accessModes:
