@@ -19,7 +19,7 @@ fi
 # Starts istio first for proxy injection purpose
 echo
 echo ">>> Deploying istiod"
-kustomize build ../../../bases/istio | kubectl apply -f -
+# kustomize build ../../../bases/istio | kubectl apply -f -
 kustomize build ../istio | kubectl apply -f -
 
 echo
