@@ -11,12 +11,12 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: java-demo
+  name: monitoring-system
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: monitoring-system
+  name: staging
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -16487,7 +16487,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: read-namespace
-  namespace: java-demo
+  namespace: staging
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -16686,7 +16686,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: read-namespace-rolebinding
-  namespace: java-demo
+  namespace: staging
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -16694,7 +16694,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: read-namespace
-  namespace: java-demo
+  namespace: staging
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -16751,7 +16751,7 @@ data:
 kind: ConfigMap
 metadata:
   name: carros
-  namespace: java-demo
+  namespace: staging
 ---
 apiVersion: v1
 data:
@@ -16796,7 +16796,7 @@ metadata:
     role: backend
     team: java-demo
   name: java-demo-backend-service
-  namespace: java-demo
+  namespace: staging
 spec:
   ports:
   - port: 8080
@@ -16814,7 +16814,7 @@ metadata:
     app: java-demo
     role: database
   name: java-demo-database-service
-  namespace: java-demo
+  namespace: staging
 spec:
   ports:
   - port: 3306
@@ -17030,7 +17030,7 @@ metadata:
     app: java-demo
     role: backend
   name: java-demo-backend-deployment
-  namespace: java-demo
+  namespace: staging
 spec:
   replicas: 1
   selector:
@@ -17083,7 +17083,7 @@ metadata:
     app: java-demo
     role: database
   name: java-demo-database-deployment
-  namespace: java-demo
+  namespace: staging
 spec:
   replicas: 1
   selector:
@@ -17149,6 +17149,7 @@ spec:
               selector:
                 matchLabels:
                   app: alertmanager-pv
+              storageClassName: standard
     grafana:
       adminPassword: password
       persistence:
@@ -17162,6 +17163,10 @@ spec:
       prometheusSpec:
         resources: {}
         retention: 15d
+        securityContext:
+          fsGroup: 0
+          runAsNonRoot: false
+          runAsUser: 0
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -17173,6 +17178,7 @@ spec:
               selector:
                 matchLabels:
                   app: prometheus-pv
+              storageClassName: standard
     prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
     prometheusOperator.createCustomResource: false
 ---
@@ -17195,6 +17201,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: public-gateway
+  namespace: default
 spec:
   selector:
     istio: ingressgateway
@@ -17210,6 +17217,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: java-demo-backend-virtual-service
+  namespace: staging
 spec:
   gateways:
   - public-gateway.default.svc.cluster.local
@@ -17236,7 +17244,7 @@ spec:
     storage: 10Mi
   hostPath:
     path: /mnt/data
-  storageClassName: manual
+  storageClassName: standard
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -17264,7 +17272,7 @@ spec:
     storage: 50Mi
   claimRef:
     name: mysql-pvc
-    namespace: java-demo
+    namespace: staging
   hostPath:
     path: /mnt/data
 ---
@@ -17281,20 +17289,7 @@ spec:
     storage: 10Mi
   hostPath:
     path: /mnt/data
-  storageClassName: manual
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pvc
-  namespace: java-demo
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50Mi
-  volumeName: mysql-pv
+  storageClassName: standard
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -17308,3 +17303,16 @@ spec:
     requests:
       storage: 10Mi
   volumeName: grafana-pv
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  namespace: staging
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+  volumeName: mysql-pv
