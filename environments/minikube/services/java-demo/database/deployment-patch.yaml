@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: java-demo-database-deployment
+  # namespace is set by kustomize
   annotations:
     fluxcd.io/automated: "true"
     fluxcd.io/tag.java-demo-database: semver:~8.0

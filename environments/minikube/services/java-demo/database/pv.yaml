@@ -24,6 +24,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
+  # namespace is set by kustomize
   
 spec:
   # Two way binding
