@@ -19,7 +19,8 @@ spec:
     - name: "java-demo-backend"
       route:
         - destination:
-            host: java-demo-backend-service.default.svc.cluster.local
+            # WARNING: set to corresponding namespace
+            host: java-demo-backend-service.staging.svc.cluster.local
             port:
               number: 8080
       

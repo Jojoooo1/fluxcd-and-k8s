@@ -3,7 +3,8 @@ kind: Kustomization
 
 # Scope all the ressource to namespace
 namespace: staging
-# Warning: kustomize do not template pv.claimRef.namespace
+# Warning: Kustomize do not template pv.claimRef.namespace
+# Warning: Sets istio virtual service complete dns including namespace
 
 # Warning: 
 # => From apps/v1 Deployment’s label selector is immutable after it gets created. 
