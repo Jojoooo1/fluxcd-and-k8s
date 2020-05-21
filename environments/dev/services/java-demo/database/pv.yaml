@@ -8,12 +8,12 @@ spec:
   claimRef:
     name: mysql-pvc
     # bug: kustomize does not template claimRef
-    namespace: staging
+    namespace: java-demo
 
   capacity:
     storage: 50Mi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
 
   hostPath:
     path: "/mnt/data"
@@ -33,4 +33,4 @@ spec:
     requests:
       storage: 50Mi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany

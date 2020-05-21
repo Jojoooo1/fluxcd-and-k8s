@@ -1,9 +1,0 @@
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: java-demo-backend-deployment
-  # namespace is set by kustomize
-  annotations:
-    fluxcd.io/automated: "true"
-    fluxcd.io/tag.java-demo-backend: glob:rc-*
