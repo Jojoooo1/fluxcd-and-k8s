@@ -33,4 +33,4 @@ spec:
     requests:
       storage: 50Mi
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
