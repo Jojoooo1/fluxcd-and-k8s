@@ -11,12 +11,12 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: monitoring-system
+  name: minikube
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: staging
+  name: monitoring-system
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -11278,6 +11278,22 @@ spec:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
+  name: sealedsecrets.bitnami.com
+spec:
+  group: bitnami.com
+  names:
+    kind: SealedSecret
+    listKind: SealedSecretList
+    plural: sealedsecrets
+    singular: sealedsecret
+  scope: Namespaced
+  subresources:
+    status: {}
+  version: v1alpha1
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.2.4
     helm.sh/hook: crd-install
@@ -16486,8 +16502,54 @@ metadata:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  annotations: {}
+  labels:
+    name: sealed-secrets-controller
+  name: sealed-secrets-controller
+  namespace: kube-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
   name: read-namespace
-  namespace: staging
+  namespace: minikube
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  annotations: {}
+  labels:
+    name: sealed-secrets-key-admin
+  name: sealed-secrets-key-admin
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - create
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: Role
+metadata:
+  annotations: {}
+  labels:
+    name: sealed-secrets-service-proxier
+  name: sealed-secrets-service-proxier
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ""
+  resourceNames:
+  - 'http:sealed-secrets-controller:'
+  - sealed-secrets-controller
+  resources:
+  - services/proxy
+  verbs:
+  - create
+  - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -16682,11 +16744,50 @@ rules:
   verbs:
   - get
 ---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  annotations: {}
+  labels:
+    name: secrets-unsealer
+  name: secrets-unsealer
+rules:
+- apiGroups:
+  - bitnami.com
+  resources:
+  - sealedsecrets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - bitnami.com
+  resources:
+  - sealedsecrets/status
+  verbs:
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - create
+  - update
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: read-namespace-rolebinding
-  namespace: staging
+  namespace: minikube
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -16694,7 +16795,41 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: read-namespace
-  namespace: staging
+  namespace: minikube
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  annotations: {}
+  labels:
+    name: sealed-secrets-controller
+  name: sealed-secrets-controller
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: sealed-secrets-key-admin
+subjects:
+- kind: ServiceAccount
+  name: sealed-secrets-controller
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  annotations: {}
+  labels:
+    name: sealed-secrets-service-proxier
+  name: sealed-secrets-service-proxier
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: sealed-secrets-service-proxier
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:authenticated
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -16739,27 +16874,36 @@ subjects:
   name: helm-operator
   namespace: flux-system
 ---
-apiVersion: v1
-data:
-  application.yml: "# MySQL\nspring:\n\n  datasource:\n    url: jdbc:mysql://java-demo-database-service:3306/database?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC\n
-    \   username: jonathan\n    password: password\n\n  jpa:\n    hibernate:\n      ddl-auto:
-    validate\n    properties:\n      hibernate:\n        dialect: org.hibernate.dialect.MySQL55Dialect\n
-    \       show_sql: true\n        format_sql: true\n\n  liquibase:\n    change-log:
-    classpath:/db/db.changelog-master.xml\n\n# Logging configuration              \nlogging:\n
-    \ config: classpath:log4j2-dev.xml\n\n# Metrics configurations\nmanagement:\n
-    \ endpoints:    \n    web:\n      exposure:\n        include: \"health,info,prometheus\""
-kind: ConfigMap
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
 metadata:
-  name: carros
-  namespace: staging
+  annotations: {}
+  labels:
+    name: sealed-secrets-controller
+  name: sealed-secrets-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: secrets-unsealer
+subjects:
+- kind: ServiceAccount
+  name: sealed-secrets-controller
+  namespace: kube-system
 ---
 apiVersion: v1
 data:
-  identity: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlKS0FJQkFBS0NBZ0VBdHVpak9tUGJTQXdpSWdERjZHUXNJYVhPL2Z0akR6TGVqem1TaEpLRWtmNVNSWWhOCk5qdjBqVys4andCdlhXL3pEUnBMeVJyT1UreVQ0c1IyWHk1c25mN3V4UGc2OWhHVERPYUpVSWsvQmpxdUQwOVkKbHBsYnM4UnRmU0RsUTZ1S3ZGS0ZuK0lOR2hwYmJjT3ZFdmw1VncyNlpCUDB6TWJMYU5VSFpLNnozZGt1UHN5Twp3T0Y2SldUN1o1UHhqY3VxdlhMa0JIZVJPQTlXcnBLWlRRUk9oV2VaV1JjK1JUVFh3Mk1kckp2QkcrQmMzcmJYCnlOUDAvck1oWmVLZjJaQ2JkRzdrUzlaSFNvNXpXS2xSaTJBeGc5MTRvUk5SWWpQeGlkQW9EREYvYzM4L0prckgKbkdhVVhTU1JHc0VwQ0JKUCtPT21FSm1QRWRnN1FGS09jb3J6WEhHUWVuc0t5V1MyMGFQbVh3UzZUV2hjUHlYawo1ZDVvc1VBV1JEVGh1b1RYRTAxcURRTVZJN0l3UEhxTG1BaGloc2FydGt4L0RCbzZmTytnVkhzMGVxNmY1NitUCk1Uaks1YnZSOTlFOWJVZlg5YjV0UFJTSXIxckhqV1Z4MlZWNHM0dDZNRzZuR1orM1U4SCtsbkk1aXFZbTJydm0KRDZ2UHEzTzBzdkloNXBvQ3JYSTVidnBoS3pUTTA1N3dkZDRSWUlFbzRZVzRBYjZQTXBOUHhCakNSUW5XU1V0MwptaU8wTS8vNC9PVWZUNFZsMG9raVZueGRPNXo5L2x6dmVhWEJVYk9XekdXQlE4REF6Y0p4MTN3YllobU9JaWlQCmlLd21MQ1ZWYzByK2F0bGNFWTlRYXpWVytGQXFxV0JmdjNlUWJ2RTZEYXlVcVNOZXdVVUNoSExGb0hNQ0F3RUEKQVFLQ0FnQTJUTm9vZTN5ZDV2dzdHLytrL2hnYjVSMk9TUk1mYi9xaWluVDA1b3AwelF1Zm1OZFRRbmxYZzlSMgpuNnB3RXN3VkY3bG4rbzFHWFBXS1hNakhlUURGNXVqN2tMWHdWMGRRalNBMnlJZnRVWDViRFRNL2drZTNGcGxxCmpGbUR2V2x5Zncwc2FlOTUwRmxVUE1PODNsTW5oT3ZReWh2aXJ5R3ovWW8wV2FrTU0yMkhOek1xRDhZelU4ZE8KK0p5OWU3azBoT2NzYkZLd1VkMXA5aHVNd2JxTjRET21QMEE5UzNMQ2pxcEFrL3pBU2R0SVF2L01ueUFjZlJGdApMZHBHdktkcDZZSGRBY0FvWWlIY01HZ0UrSW02bkFVenpJaGNudzhWMnJZSTZLanRvTmtlaFJTOVdiYXg4Q2tqCnlEUm1NUW1NMmdoeTVTT1VLSjF1ZXhQTzdYRlJmOURnbXJZVjF0S1ZucW1PbHF1RlRSM2VoOGFLOU5TbHRzVkIKeXNnQklBU1JjZmRpU0lXc2hMVFNRZ2dxSWRDakJINGdieXBGdFVLeUVWZEpFT0FzVTZwMy84cTh1cENPL3ZyWQpSUjMwQ2MvNlQxVFBFM3VqWGV3ZkwyaGJ5YzJjSTQrdlZaRWMybVFJbXErZXZYNXFucUVFb2FRY1ZwQk1UQ1RMClRqd1BzWFFsZ2lxdGFEUkVzM1p1V3JWL2RXaGdyeGQ3SE9uOGgySFlSTEp1ZFlBN0lpUWhTM09NMzdEZWRQY1MKamNFenZybks3Ym5ScjBaMmNwdjZKRitOTlpqbklXc3NCK0pFL1lHcnlnVmRGZDR5MnZtVW9uVzdKRXprQjd2dApvWFc1VXk5ellvSk51TndXenJvSFI0aDlXcUswM2xtOXQxR3ZaSitBbHZ3eFZOMkFBUUtDQVFFQTRRaW8vMDRuClFwUG9NZG9NcVJBN0c1TmRzWmx5UFZ2WDI2M2l6d2Z2SWEwVVpRUFlKeS9rZTNaWG9nTWg5TXV4UzNkdW1GQTYKNm9UNkdTdUV0dmE1bGlBVXNuZlkzNVJuQmxZeGZQK29kTFJ3UDNTL1g2MndhemlSRmYyM0N6b0ViZmU3TSt3bApJMWpJdkFURnJWRHZ5U3A5L04rTGRRbDdiaFR3azc3eGdNTW5tVzJYbVZKSGJBMFZSTTRUamVjdEtoaHZiTnFmCjdsNENBSk5NVDBwb1NGWXE4SmlhWFNSQ2pvS0tOdXFndzlQU1JHei9iTW1mcmwrOTFGZE5qNy8xSnRUUXNOMkoKamR1bFMxWXAvOVlSTS9oZCt3OG1BaVZ6NFMrK1hSdjBCVng4STIvTUFQNUtZeW5YbTBCUlVrZ0crRGFPY3E1MApQRUhjZlNRbWFLbEQ4UUtDQVFFQTBCUUY5bUs3T2dhSm83NUFxNzNwK2N1c3Y1aXR5NVRyeEs4M0ZPRTNmZ2xZClM2YklPb2NUU2Fmb1ZhaTQ1SUFJa2xqWXlzZGlkS2F0aFgyNkwzenk4SjdVSGVtMDZRbTgwZnhQbDcwRVRURHcKMzUwa3dWaVhCVC9kb2VGMTF5eUFKd25KeXJsekVrQ2I0ZDRjenFGWEhOVXBWOENsOTk3OTlxbU9WQzh4K1RLVwowUUVjTHU1TWhrbG5ZOFNRNkEvTitva25UVzNqc0tKMUhtS0lHb20vckFsV0ptTGp1NlVGSitxUFA2RkxZMzlaCkF2WXdvQm5aZnpmRXZVOFpTQWU0YWYyWWdlelNNNlpNaFo2SUV4SFZNbmxadEJvWjVvZFkxa0RMUjRaU2dCZnIKRkc4bEtiRGs4UDRBNkVpaERVZ3p2NDdxeW9ub1poTWtFRlQrcURzK293S0NBUUI4YWJaTldGOGFUdjI3dWdydgoyWHBrVjRnZ2JXNmNmOCtLczh0R25PTlhvZ0k1aXZPUlRzZ3FmaFliQzFKVnJkdjZsakE5NDNWL1BUK3NkTVB1CkIrQTVJTWx3bGhRQUlHTUpQTlFsZ0k4WTNyMkVSNzZhWGtQQU04ajYrSWVmbkZiZ21Xc1ZYTVIzazFsL29iL00KZjRmaWx5eUtodWpxTHZEZnZwSDNqVVNsNUw5YTh4MHlkaXZva0I4bktDdmxjMThqKzloMnZUUllxLzY5WkxKMgp6L054c3JvUXhMM3JLdVhsTmtURjhkZ3FERTBlNllnYUZDckZWRWQyUTBJdGJIcFVHcXE2YmZEanpnREg4djVMClpJV2tUdmRlbTFSdk1WZXNzeUd6Qm9aV0JIalplckMyQitFR2pCYVl6ZWxuN1V4MUpHeUMrUEpvY2gwOXpxT3gKajR0eEFvSUJBSE9vYlpnQ1VTZHpzdFg5VGwwbjl3SU9JRHR2VmtzdXY4NVh4am9vNVh0OUhrTU90WVV5eDVuTgpadXNXR1krSlN6cHRnRE5XbUhkV25tVHcrYWlqdnpYWVV2YzlqSDFzR0RSd0ZwMjFSc3JSUlZKR09zUHR4aVA0CjEreS9NWTBsQXlhdjNpWjg1bVZpM0VLei96Y3Jud3c3di9zeTdnM1ZPVHorQ2tybzROSXZPSDE4TEhvNW92ZVIKblpKckZGQ3BXRWpHSzc1eU1ubGdFOUdMMnpORkZmRStUMUNPN3g3Q0h4ZU0zWXIwMEw3QmJteWpBMnc2Y2hhdwpuUDdORkxSZzlqU1Q3VTFxb1h4c0YyUytOY3pEd01tSmdqOEZzeGZjYTVqTDh6SVNpNUQvdW45bE9EYndTSkZiCjNvMCtzYVo4VjZkR2ZXT1BQRXBnb1U4aXIxbzdkQmtDZ2dFQkFMOEloc1J6NW1NSnROQkVlaWNiMEJOUytxRXcKdjkydE5iRkN2ZWpIVHNQUkFXSnU4VUI4TDJCZVdvOCtPS3crWVRVL003d0NHQXQrRnoxRlhGREhiYWVoaklKVApwM1MvcTU4Z3RyZlhLUHlIbFZuN0VSdU9adE9JcThzK1BjL3JJVFphcHhYSW1LVnJpa0Qxa01jNmRBMG9LZDEwCnZIdmlXa1JNTVZsYU94NWlxa09KazR3MGczb0o4Rk95bEFJSlBlV0prcDlmdytySGRaeFhQbExEaEpBeU83SGgKdHVXRzFCbmVObDNkMUdIVTJOeDNmU0tsR2NXd2ZWVzM0L244N3FTMlVvZmdzWFpwM0N3VHViSmI1RWFPSmlVMgoxdGtDc1JWYnhrKzVYdEY3RUpYN2FIV2J6ODBBMWdSV3IyTGFtMTRyZkY3dFJvYjhad1BOdE5WcXlXOD0KLS0tLS1FTkQgUlNBIFBSSVZBVEUgS0VZLS0tLS0=
-kind: Secret
+  application.yml: |-
+    # MySQL
+    spring:
+
+      datasource:
+        url: jdbc:mysql://java-demo-database-service:3306/database?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        username: jonathan
+        password: password
+kind: ConfigMap
 metadata:
-  name: flux-git-deploy
-  namespace: flux-system
+  name: carros
+  namespace: minikube
 ---
 apiVersion: v1
 kind: Service
@@ -16791,12 +16935,28 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations: {}
+  labels:
+    name: sealed-secrets-controller
+  name: sealed-secrets-controller
+  namespace: kube-system
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    name: sealed-secrets-controller
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
   labels:
     app: java-demo
     role: backend
     team: java-demo
   name: java-demo-backend-service
-  namespace: staging
+  namespace: minikube
 spec:
   ports:
   - port: 8080
@@ -16814,7 +16974,7 @@ metadata:
     app: java-demo
     role: database
   name: java-demo-database-service
-  namespace: staging
+  namespace: minikube
 spec:
   ports:
   - port: 3306
@@ -16849,7 +17009,7 @@ spec:
         - --memcached-hostname=memcached.flux-system
         - --memcached-service=
         - --ssh-keygen-dir=/var/fluxd/keygen
-        - --git-path=environments/minikube
+        - --git-path=environments/0.minikube
         - --git-branch=master
         - --git-url=git@github.com:jojoooo1/fluxcd-and-k8s
         - --git-label=flux-sync
@@ -17023,6 +17183,70 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations: {}
+  labels:
+    name: sealed-secrets-controller
+  name: sealed-secrets-controller
+  namespace: kube-system
+spec:
+  minReadySeconds: 30
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: sealed-secrets-controller
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        name: sealed-secrets-controller
+    spec:
+      containers:
+      - args: []
+        command:
+        - controller
+        env: []
+        image: quay.io/bitnami/sealed-secrets-controller:v0.12.3
+        imagePullPolicy: Always
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        name: sealed-secrets-controller
+        ports:
+        - containerPort: 8080
+          name: http
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+        securityContext:
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1001
+        stdin: false
+        tty: false
+        volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+      imagePullSecrets: []
+      initContainers: []
+      securityContext:
+        fsGroup: 65534
+      serviceAccountName: sealed-secrets-controller
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: tmp
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   annotations:
     fluxcd.io/automated: "true"
     fluxcd.io/tag.java-demo-backend: glob:rc-*
@@ -17030,7 +17254,7 @@ metadata:
     app: java-demo
     role: backend
   name: java-demo-backend-deployment
-  namespace: staging
+  namespace: minikube
 spec:
   replicas: 1
   selector:
@@ -17083,7 +17307,7 @@ metadata:
     app: java-demo
     role: database
   name: java-demo-database-deployment
-  namespace: staging
+  namespace: minikube
 spec:
   replicas: 1
   selector:
@@ -17119,6 +17343,21 @@ spec:
       - name: mysql-pv
         persistentVolumeClaim:
           claimName: mysql-pvc
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: flux-git-deploy
+  namespace: flux-system
+spec:
+  encryptedData:
+    identity: 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
+  template:
+    metadata:
+      creationTimestamp: null
+      name: flux-git-deploy
+      namespace: flux-system
 ---
 apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
@@ -17167,6 +17406,7 @@ spec:
           fsGroup: 0
           runAsNonRoot: false
           runAsUser: 0
+        serviceMonitorSelectorNilUsesHelmValues: false
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -17179,8 +17419,8 @@ spec:
                 matchLabels:
                   app: prometheus-pv
               storageClassName: standard
-    prometheus.prometheusSpec.serviceMonitorSelectorNilUsesHelmValues: false
-    prometheusOperator.createCustomResource: false
+    prometheusOperator:
+      createCustomResource: false
 ---
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
@@ -17217,7 +17457,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: java-demo-backend-virtual-service
-  namespace: staging
+  namespace: minikube
 spec:
   gateways:
   - public-gateway.default.svc.cluster.local
@@ -17227,7 +17467,7 @@ spec:
   - name: java-demo-backend
     route:
     - destination:
-        host: java-demo-backend-service.default.svc.cluster.local
+        host: java-demo-backend-service.minikube.svc.cluster.local
         port:
           number: 8080
 ---
@@ -17272,7 +17512,7 @@ spec:
     storage: 50Mi
   claimRef:
     name: mysql-pvc
-    namespace: staging
+    namespace: minikube
   hostPath:
     path: /mnt/data
 ---
@@ -17294,6 +17534,19 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: mysql-pvc
+  namespace: minikube
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+  volumeName: mysql-pv
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
   name: grafana-pvc
   namespace: monitoring-system
 spec:
@@ -17303,16 +17556,3 @@ spec:
     requests:
       storage: 10Mi
   volumeName: grafana-pv
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mysql-pvc
-  namespace: staging
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50Mi
-  volumeName: mysql-pv
