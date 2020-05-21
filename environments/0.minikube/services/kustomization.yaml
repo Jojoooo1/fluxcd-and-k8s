@@ -3,8 +3,9 @@ kind: Kustomization
 
 # Scope all the ressource to namespace
 namespace: minikube
-# Warning: Kustomize do not template pv.claimRef.namespace
-# Warning: Sets istio virtual service complete dns including namespace
+# warning: change namespace.yaml
+# Warning: change database/pv.yaml => pv.claimRef.namespace (Kustomize do not template pv.claimRef.namespace)
+# Warning: change istio-services/javademo-backend.yaml => Sets dns fullname that include namespace
 
 # Warning: 
 # => From apps/v1 Deployment’s label selector is immutable after it gets created. 
