@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Scope all the ressource to namespace
+namespace: staging
+# Warning: Kustomize do not template pv.claimRef.namespace
+# Warning: Sets istio virtual service complete dns including namespace
+
+# Warning: 
+# => From apps/v1 Deployment’s label selector is immutable after it gets created. 
+# => commonLabels => Set labels on all Resources and Selectors. (can fucked up your deployment because of label selector)
+
+bases:
+  - ../../../bases/services/java-demo
+  
+patchesStrategicMerge:
+  - java-demo/database/deployment-patch.yaml
+  - java-demo/backend/deployment-patch.yaml
+
+resources:
+  - java-demo/namespace.yaml
+  - java-demo/rbac/read-namespace-service-account.yaml
+  - java-demo/rbac/read-namespace-role-binding.yaml
+  
+  - java-demo/database/pv.yaml
+  - java-demo/backend/service-monitor-prom.yaml
+
+  # - istio-services/java-demo-backend.yaml
+  
+  # - prometheus/prometheus.yaml
+  # - prometheus/cluster-role-binding.yaml

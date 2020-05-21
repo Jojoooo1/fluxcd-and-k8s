@@ -7,12 +7,11 @@ bases:
   - ../../../bases/flux
 
 resources:
-  - git-ssh-secret.yaml
+  - secret-sealed-git-deploy.yaml
   - namespace.yaml
 
 patchesStrategicMerge:
-  - delete-default-secret.yaml
-  - delete-default-ns.yaml
+  - secret-delete-git-deploy.yaml
 
 patchesJson6902:
   # Replace helm operator arguments
@@ -43,7 +42,7 @@ patchesJson6902:
           - --memcached-service=
           - --ssh-keygen-dir=/var/fluxd/keygen
 
-          - --git-path=environments/minikube
+          - --git-path=environments/dev
           - --git-branch=master
           - --git-url=git@github.com:jojoooo1/fluxcd-and-k8s
 

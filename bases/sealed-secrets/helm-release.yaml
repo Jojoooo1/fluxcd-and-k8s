@@ -1,0 +1,13 @@
+# ---
+# apiVersion: helm.fluxcd.io/v1
+# kind: HelmRelease
+# metadata:
+#   name: sealed-secrets
+
+# spec:
+#   releaseName: sealed-secrets
+#   chart:
+#     # https://hub.helm.sh/charts/stable/sealed-secrets
+#     repository: https://kubernetes-charts.storage.googleapis.com/
+#     name: sealed-secrets
+#     version: 1.10.1

@@ -4,10 +4,6 @@ kind: Kustomization
 
 namespace: cert-manager
 
-commonLabels:
-  k8s.managedkube.com/path: kubernetes-releases-base-gcp-cert-manager
-  k8s.managedkube.com/app: cert-manager
-
 resources:
   - crds
   - namespace

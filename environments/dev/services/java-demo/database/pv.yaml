@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-pv
+
+spec:
+  # Two way binding
+  claimRef:
+    name: mysql-pvc
+    # bug: kustomize does not template claimRef
+    namespace: staging
+
+  capacity:
+    storage: 50Mi
+  accessModes:
+    - ReadWriteOnce
+
+  hostPath:
+    path: "/mnt/data"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  # namespace is set by kustomize
+  
+spec:
+  # Two way binding
+  volumeName: mysql-pv
+  resources:
+    requests:
+      storage: 50Mi
+  accessModes:
+    - ReadWriteOnce

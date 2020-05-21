@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  # namespace is set by kustomize
+spec:
+  type: NodePort
+  ports:
+  - name: web
+    nodePort: 30900
+    port: 9090
+    protocol: TCP
+    targetPort: web
+  selector:
+    prometheus: prometheus
+
+---
+
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+  # namespace is set by kustomize
+  
+spec:
+  serviceAccountName: prometheus
+  serviceMonitorSelector:
+    matchLabels:
+      team: java-demo
+
+  resources:
+    requests:
+      memory: 100Mi

@@ -76,6 +76,7 @@ spec:
           #   requests:
           #     memory: "128Mi" # jib: -Xms512m # 94, 76.412 seconds 
           #     cpu: "0.5"
+          # Needs to be burstable because Spring needs lots of resources at creation
           #   limits:
-          #     memory: "256Mi" # jib: -Xmx1024m
-          #     cpu: "1"
+          #     memory: "1024Mi" # jib: -Xmx1024m
+          #     cpu: "2"

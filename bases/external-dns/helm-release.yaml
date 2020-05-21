@@ -3,15 +3,13 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: external-dns
-  namespace: external-dns
 spec:
-  helmVersion: v3
+  # https://hub.helm.sh/charts/bitnami/external-dns
   releaseName: external-dns
   chart:
     name: external-dns
-    repository: https://charts.bitnami.com/bitnami
-    # external-dns version: 0.7.1
-    version: 2.22.1
+    repository: https://kubernetes-charts.storage.googleapis.com/ # ExternalDNS version: 0.7.1
+    version: 3.0.2
   values:
     resources:
       limits:

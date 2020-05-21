@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Can test using minikube tunnel & using istio-gw LoadBalanced external IP associated
+# Istio GW
+bases:
+  - ../../../bases/ingress

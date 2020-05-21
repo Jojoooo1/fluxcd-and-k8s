@@ -4,9 +4,6 @@ kind: Kustomization
 
 namespace: external-dns
 
-commonLabels:
-  k8s.managedkube.com/path: kubernetes-releases-base-gcp-external-dns
-  k8s.managedkube.com/app: external-dns
-
 resources:
+  - namespace
   - helm-release.yaml
