@@ -20,7 +20,7 @@ spec:
       route:
         - destination:
             # WARNING: set to corresponding namespace
-            host: java-demo-backend-service.staging.svc.cluster.local
+            host: java-demo-backend-service.minikube.svc.cluster.local
             port:
               number: 8080
       

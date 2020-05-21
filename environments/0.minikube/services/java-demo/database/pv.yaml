@@ -8,7 +8,7 @@ spec:
   claimRef:
     name: mysql-pvc
     # bug: kustomize does not template claimRef
-    namespace: staging
+    namespace: minikube
 
   capacity:
     storage: 50Mi
